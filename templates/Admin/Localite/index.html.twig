@@ -8,20 +8,20 @@
 
 {% block title 'Administration des régions | Orientation Authentique' %}
 
-{% block big_title 'Gestion des localité' %}
+{% block big_title 'Gestion des localités' %}
 
 
 
 {% block contextual_menu %}
-<div class="uk-background-primary uk-light uk-padding-small uk-panel">
-          <p class="uk-h4">Menu</p>
-      </div>
+  <div class="uk-background-primary uk-light uk-padding-small uk-panel">
+    <p class="uk-h4">Menu</p>
+  </div>
   <ul uk-accordion="collapsible: true">
     <li>
       <a class="uk-accordion-title" href="{{ path('localite') }}">Régions</a>
       <div class="uk-accordion-content">
         <ul class="uk-list uk-list-divider">
-          <li><a href="{{ path('homepage') }}">Liste</a></li>
+          <li><a href="{{ path('regions') }}">Liste</a></li>
           <li><a href="{{ path('region.add') }}">Ajouter</a></li>
         </ul>
       </div>
@@ -30,23 +30,44 @@
       <a class="uk-accordion-title" href="{{ path('localite') }}">Villes</a>
       <div class="uk-accordion-content">
         <ul class="uk-list uk-list-divider">
-          <li><a href="{{ path('homepage') }}">Liste</a></li>
-          <li><a href="{{ path('homepage') }}">Ajouter</a></li>
+          <li><a href="{{ path('villes') }}">Liste</a></li>
+          <li><a href="{{ path('ville.add') }}">Ajouter</a></li>
         </ul>
       </div>
     </li>
     <li>
-      <a class="uk-accordion-title" href="{{ path('localite') }}">Commune</a>
+      <a class="uk-accordion-title" href="{{ path('localite') }}">Communes</a>
       <div class="uk-accordion-content">
         <ul class="uk-list uk-list-divider">
-          <li><a href="{{ path('homepage') }}">Liste</a></li>
-          <li><a href="{{ path('homepage') }}">Ajouter</a></li>
+          <li><a href="{{ path('communes') }}">Liste</a></li>
         </ul>
       </div>
     </li>
   </ul>
 {% endblock %}
 
+
+{% block notification %}
+  {% for message in app.flashes('success') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+    <script>
+      function notify(){
+        UIkit.notification({
+          message: '<span uk-icon=\'icon: check\'></span> Parfait+
+          ',
+          status: 'success',
+          pos: 'top-center',
+          timeout: 5000
+        });
+      }
+    </script>
+  {% endfor %}
+{% endblock %}
 
 
 {% block content %}

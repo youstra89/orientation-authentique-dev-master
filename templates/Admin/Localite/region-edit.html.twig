@@ -1,0 +1,27 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Localite/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Edition d\'une région | Orientation Authentique' %}
+
+{% block big_title 'Edition d\'une région' %}
+
+
+
+{% block content %}
+  <h2>Edition d'une région</h2>
+  {{ include('Admin/Localite/_region-form.html.twig', {button: 'Editer'}) }}
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

@@ -10,20 +10,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\RegionRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\VilleRepository")
  * @UniqueEntity("nom")
  */
-class Region
+class Ville
 {
-
-    const LOCALISATION = [
-      0 => 'Nord',
-      1 => 'Sud',
-      2 => 'Est',
-      3 => 'Ouest',
-      4 => 'Centre',
-    ];
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -33,15 +24,15 @@ class Region
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=2, max=255)
+     * @Assert\Length(min=3, max=255)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\Regex("/^[0-4]{1}$/")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region", inversedBy="villes")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $localisation;
+    private $region;
 
     /**
      * @ORM\Column(type="datetime")
@@ -54,16 +45,16 @@ class Region
     private $updated_at;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Ville", mappedBy="region")
+     * @ORM\OneToMany(targetEntity="App\Entity\Commune", mappedBy="ville")
      */
-    private $villes;
+    private $communes;
 
 
     public function __construct()
     {
       $this->created_at = new \Datetime();
       $this->updated_at = new \Datetime();
-      $this->villes = new ArrayCollection();
+      $this->communes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,21 +74,16 @@ class Region
         return $this;
     }
 
-    public function getLocalisation(): ?int
+    public function getRegion(): ?Region
     {
-        return $this->localisation;
+        return $this->region;
     }
 
-    public function setLocalisation(int $localisation): self
+    public function setRegion(?Region $region): self
     {
-        $this->localisation = $localisation;
+        $this->region = $region;
 
         return $this;
-    }
-
-    public function getLocalisationType(): string
-    {
-      return self::LOCALISATION[$this->localisation];
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
@@ -125,30 +111,30 @@ class Region
     }
 
     /**
-     * @return Collection|Ville[]
+     * @return Collection|Commune[]
      */
-    public function getVilles(): Collection
+    public function getCommunes(): Collection
     {
-        return $this->villes;
+        return $this->communes;
     }
 
-    public function addVille(Ville $ville): self
+    public function addCommune(Commune $commune): self
     {
-        if (!$this->villes->contains($ville)) {
-            $this->villes[] = $ville;
-            $ville->setRegion($this);
+        if (!$this->communes->contains($commune)) {
+            $this->communes[] = $commune;
+            $commune->setVille($this);
         }
 
         return $this;
     }
 
-    public function removeVille(Ville $ville): self
+    public function removeCommune(Commune $commune): self
     {
-        if ($this->villes->contains($ville)) {
-            $this->villes->removeElement($ville);
+        if ($this->communes->contains($commune)) {
+            $this->communes->removeElement($commune);
             // set the owning side to null (unless already changed)
-            if ($ville->getRegion() === $this) {
-                $ville->setRegion(null);
+            if ($commune->getVille() === $this) {
+                $commune->setVille(null);
             }
         }
 

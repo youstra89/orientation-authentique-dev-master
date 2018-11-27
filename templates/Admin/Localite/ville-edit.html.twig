@@ -1,0 +1,27 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Localite/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Edition d\'une ville | Orientation Authentique' %}
+
+{% block big_title 'Edition d\'une ville' %}
+
+
+
+{% block content %}
+  <h2>Edition d'une ville</h2>
+  {{ include('Admin/Localite/_ville-form.html.twig', {button: 'Editer'}) }}
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Localite/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Villes enregistrées | Orientation Authentique' %}
+
+{% block big_title 'Gestion des villes' %}
+
+
+
+{% block content %}
+  <h2>Villes enregistrées</h2>
+  <div class="uk-hidden@s">
+    <p uk-margin>
+      <a class="uk-button uk-button-default" href="{{ path('ville.add') }}">Ajouter</a>
+    </p>
+  </div>
+  <table class="uk-table uk-table-divider">
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Nom</th>
+        <th>Région</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set i = 0 %}
+      {% for ville in villes %}
+        {% set i = i + 1 %}
+        <tr>
+          <td>{{ i }}</td>
+          <td>{{ ville.nom }}</td>
+          <td>{{ ville.region.nom }}</td>
+          <td>
+            <a href="{{ path('ville.edit', {id: ville.id}) }}" uk-icon="icon: file-edit" uk-tooltip="title: Editer la ville; pos: top"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{{ path('commune.add', {villeId: ville.id}) }}" uk-icon="icon: plus" uk-tooltip="title: Ajouter une commune à cette ville; pos: top"></a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

@@ -1,0 +1,66 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Localite/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Communes enregistrées | Orientation Authentique' %}
+
+{% block big_title 'Gestion des communes' %}
+
+
+
+{% block content %}
+  <h2>Communes enregistrées</h2>
+  <table class="uk-table uk-table-divider">
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Nom</th>
+        <th>Ville</th>
+        <th>Nbr Hbts</th>
+        <th>Taux Musulmans</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set i = 0 %}
+      {% for commune in communes %}
+        {% set i = i + 1 %}
+        <tr>
+          <td>{{ i }}</td>
+          <td>{{ commune.nom }}</td>
+          <td>{{ commune.ville.nom }}</td>
+          <td>
+            {% if commune.nombreHabitants %}
+              {{ commune.nombreHabitants}}
+            {% else %}
+              Indéterminé
+            {% endif %}
+          </td>
+          <td>
+            {% if commune.tauxMusulmans %}
+              {{ commune.tauxMusulmans}}
+            {% else %}
+              Indéterminé
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ path('commune.edit', {id: commune.id}) }}" uk-icon="icon: file-edit" uk-tooltip="title: Editer la commune; pos: top"></a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}
