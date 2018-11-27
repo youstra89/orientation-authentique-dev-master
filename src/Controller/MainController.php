@@ -9,15 +9,12 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class MainController extends AbstractController
 {
-  // /**
-  //  * Matches /blog exactly
-  //  *
-  //  * @Route("/blog", name="blog_list")
-  //  */
+  /**
+   * @Route("/", name="homepage")
+   */
     public function index()
     {
 
-        return $this->render('Home/index.html.twig', [
-        ]);
+        return $this->render('base.html.twig');
     }
 }

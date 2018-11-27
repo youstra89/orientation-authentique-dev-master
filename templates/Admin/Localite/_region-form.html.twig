@@ -1,0 +1,16 @@
+{{ form_start(form) }}
+  <fieldset class="uk-fieldset">
+
+      <legend class="uk-legend">Legend</legend>
+
+      <div class="uk-margin">
+          {{ form_row(form.nom) }}
+      </div>
+
+      <div class="uk-margin">
+        {{ form_row(form.localisation, {'class': 'uk-select'}) }}
+      </div>
+  </fieldset>
+  {{ form_rest(form) }}
+  <button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+{{ form_end(form) }}

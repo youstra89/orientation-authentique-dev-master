@@ -1,0 +1,62 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'admin-base.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Administration des régions | Orientation Authentique' %}
+
+{% block big_title 'Gestion des localité' %}
+
+
+
+{% block contextual_menu %}
+<div class="uk-background-primary uk-light uk-padding-small uk-panel">
+          <p class="uk-h4">Menu</p>
+      </div>
+  <ul uk-accordion="collapsible: true">
+    <li>
+      <a class="uk-accordion-title" href="{{ path('localite') }}">Régions</a>
+      <div class="uk-accordion-content">
+        <ul class="uk-list uk-list-divider">
+          <li><a href="{{ path('homepage') }}">Liste</a></li>
+          <li><a href="{{ path('region.add') }}">Ajouter</a></li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <a class="uk-accordion-title" href="{{ path('localite') }}">Villes</a>
+      <div class="uk-accordion-content">
+        <ul class="uk-list uk-list-divider">
+          <li><a href="{{ path('homepage') }}">Liste</a></li>
+          <li><a href="{{ path('homepage') }}">Ajouter</a></li>
+        </ul>
+      </div>
+    </li>
+    <li>
+      <a class="uk-accordion-title" href="{{ path('localite') }}">Commune</a>
+      <div class="uk-accordion-content">
+        <ul class="uk-list uk-list-divider">
+          <li><a href="{{ path('homepage') }}">Liste</a></li>
+          <li><a href="{{ path('homepage') }}">Ajouter</a></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+{% endblock %}
+
+
+
+{% block content %}
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}
