@@ -1,0 +1,32 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/HDS/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+
+{% block title 'Biographie de ' ~ hds.pnom ~ ' ' ~ hds.nom ~ ' | Orientation Authentique' %}
+
+{% block big_title 'Biographie d\'un homme de science' %}
+
+
+
+{% block content %}
+  <h2>Biographie de <strong>{{ hds.pnom }} {{ hds.nom }}</strong> </h2>
+  <div uk-grid>
+    <div class="{{ hds.pnom }}">
+      <p>{{ hds.biographie|raw }}</p>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

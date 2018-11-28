@@ -1,0 +1,91 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Mosquee/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+
+{% block title 'Informations sur la mosquée ' ~ mosquee.nom ~ ' à ' ~ mosquee.commune.nom ~ ' | Orientation Authentique' %}
+
+{% block big_title 'Informations sur une mosquée' %}
+
+
+
+{% block contextual_menu %}
+  <div class="uk-background-primary uk-light uk-padding-small uk-panel">
+    <p class="uk-h4">Menu</p>
+  </div>
+  <ul uk-accordion="collapsible: true">
+    <li>
+      <a class="uk-accordion-title" href="{{ path('localite') }}">Mosquées</a>
+      <div class="uk-accordion-content">
+        <ul class="uk-list uk-list-divider">
+          <li><a href="{{ path('mosquees') }}">Liste</a></li>
+          <li><a href="{{ path('mosquee.add') }}">Ajouter</a></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+{% endblock %}
+
+
+
+{% block content %}
+  <a href="javascript:history.back()"class="uk-button uk-button-default">Retour</A>
+  <h2>Informations mosquée <strong>{{ mosquee.nom }}</strong> à <strong>{{ mosquee.commune.nom }}</strong> </h2>
+  <div uk-grid>
+    <div class="uk-overflow-auto">
+      <table class="uk-table uk-table-small uk-table-divider" uk-grid>
+        <tbody>
+          <tr>
+            <td class="uk-width-large"><strong>Nom</strong></td>
+            <td class="uk-width-xxlarge uk-margin">{{ mosquee.nom }}</td>
+          </tr>
+          <tr>
+            <td><strong>Localisation</strong></td>
+            <td>{{ mosquee.quartier }}, {{ mosquee.commune.nom }}</td>
+          </tr>
+          <tr>
+            <td><strong>Imam</strong></td>
+            <td>
+              {% if mosquee.imam %}
+                {{ mosquee.imam.pnom }} {{ mosquee.imam.nom }}, {{ mosquee.imam.numero }}
+              {% else %}
+                {{ mosquee.nomImam }} {{ mosquee.numeroImam }}
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Prière du vendredi</strong></td>
+            <td>
+              {% if mosquee.djoumoua == TRUE %}
+                Oui
+              {% else %}
+                Non
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Construite en</strong></td>
+            <td>{{ mosquee.anneeConstruction }}</td>
+          </tr>
+          <tr>
+            <td><strong>Description</strong></td>
+            <td>{{ mosquee.description }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

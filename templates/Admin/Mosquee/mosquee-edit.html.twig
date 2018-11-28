@@ -1,0 +1,47 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Mosquee/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Edition d\'une mosquée | Orientation Authentique' %}
+
+{% block big_title 'Edition d\'une mosquée' %}
+
+
+
+{% block contextual_menu %}
+  <div class="uk-background-primary uk-light uk-padding-small uk-panel">
+    <p class="uk-h4">Menu</p>
+  </div>
+  <ul uk-accordion="collapsible: true">
+    <li>
+      <a class="uk-accordion-title" href="{{ path('mosquees') }}">Mosquées</a>
+      <div class="uk-accordion-content">
+        <ul class="uk-list uk-list-divider">
+          <li><a href="{{ path('mosquees') }}">Liste</a></li>
+          <li><a href="{{ path('mosquee.add') }}">Ajouter</a></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="uk-hidden@s">
+  <p uk-margin>
+    <a class="uk-button uk-button-default" href="{{ path('mosquees') }}">Liste</a>
+  </p>
+</div>
+  <h2>Edition d'une mosquée</h2>
+  {{ include('Admin/Mosquee/_mosquee-form.html.twig', {button: 'Editer'}) }}
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}

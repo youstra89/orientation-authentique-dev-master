@@ -1,0 +1,98 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'admin-base.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Administration des HDS | Orientation Authentique' %}
+
+{% block big_title 'Les Hommes de Science' %}
+
+
+
+{% block contextual_menu %}
+  <div class="uk-background-primary uk-light uk-padding-small uk-panel">
+    <p class="uk-h4">Menu</p>
+  </div>
+  <ul uk-accordion="collapsible: true">
+    <li>
+      <a class="uk-accordion-title" href="{{ path('localite') }}">Hommes de sciences</a>
+      <div class="uk-accordion-content">
+        <ul class="uk-list uk-list-divider">
+          <li><a href="{{ path('hds') }}">Liste</a></li>
+          <li><a href="{{ path('hds.add') }}">Ajouter</a></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+{% endblock %}
+
+
+{% block notification %}
+  {% for message in app.flashes('success') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+  {% for message in app.flashes('error') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-danger" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+
+{% block content %}
+  <h2>Hommes de science enregistrés</h2>
+  <div class="uk-hidden@s">
+    <p uk-margin>
+      <a class="uk-button uk-button-default" href="{{ path('hds.add') }}">Ajouter</a>
+    </p>
+  </div>
+  <table class="uk-table uk-table-small uk-table-divider">
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Nom</th>
+        <th>NE</th>
+        <th>Spécialité</th>
+        <th>Commune</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set i = 0 %}
+      {% for hds in hommes %}
+        {% set i = i + 1 %}
+        <tr>
+          <td>{{ i }}</td>
+          <td>{{ hds.nom }} {{ hds.pnom }}</td>
+          <td>{{ hds.dateNaissance|date('d-m-Y') }}</td>
+          <td>{{ hds.specialite }}</td>
+          <td>{{ hds.commune.nom }}</td>
+          <td>
+            <a href="{{ path('hds.edit', {id: hds.id}) }}" uk-icon="icon: file-edit" uk-tooltip="title: Mettre à jour les informations; pos: top"></a>
+            <a href="{{ path('hds.biographie', {id: hds.id}) }}" uk-icon="icon: file-text" uk-tooltip="title: Lire la biographie; pos: top"></a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

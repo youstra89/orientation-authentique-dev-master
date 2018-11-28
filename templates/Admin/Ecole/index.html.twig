@@ -1,0 +1,126 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'admin-base.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Administration des Ecoles | Orientation Authentique' %}
+
+{% block big_title 'Mosquées' %}
+
+
+{% block notification %}
+  {% for message in app.flashes('success') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+  {% for message in app.flashes('error') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-danger" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+
+
+{% block contextual_menu %}
+{% endblock %}
+
+
+
+{% block content %}
+{% endblock %}
+
+{% block body %}
+  <h2>Ecoles enregistrées</h2>
+  <div class="">
+    <p uk-margin>
+      <a class="uk-button uk-button-default" href="{{ path('ecole.add') }}">Ajouter</a>
+    </p>
+  </div>
+
+  <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
+    {% for ecole in ecoles %}
+      <div>
+        <div class="uk-card uk-card-default uk-card-body">
+            <div class="uk-width-auto">
+              <img class="uk-border-circle" width="40" height="40" src="/img/fahrul-azmi.jpg">
+            </div>
+            <div class="uk-card-badge uk-label"uk-tooltip="title: Année de construction de l'école; pos: top">{{ ecole.anneeConstruction }}</div>
+            <h3 class="uk-card-title uk-margin-remove-bottom">{{ ecole.nom }} <a href="{{ path('ecole.edit', {id: ecole.id}) }}" uk-icon="icon: file-edit" uk-tooltip="title: Editer la mosquée; pos: top"></a></h3>
+            <p class="uk-text-meta uk-margin-remove-top">{{ ecole.quartier ~ ', '~ ecole.commune.nom }}</p>
+            <p></p>
+            <br>
+            <a href="{{ path('ecole.info', {id: ecole.id}) }}" class="uk-button uk-button-text">Plus d'infos</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+
+{% block javascripts %}
+  <script>
+    $(document).ready(function(){
+      // // Lorsque l'utilisateur clique sur le bouton de soumission, on vérifie le contenu
+      // //des champs nom et numéro. Ils ne doivent pas être vides
+      // $('.uk-button.uk-button-primary').on('click', function(){
+      //   if(typeof $('#mosquee_nom_imam').value === null or typeof $('#mosquee_nom_imam').value === 'undefined'){
+      //     alert('Le nom de l\'imam et/ou sont contact n\'ont pas été saisis');
+      //     return false;
+      //   }
+      //   else if(typeof $('#mosquee_numero_imam').value === 'undefined' or typeof $('#mosquee_numero_imam').value === null){
+      //     alert('Le nom de l\'imam et/ou sont contact n\'ont pas été saisis');
+      //     return false;
+      //   }
+      // });
+
+
+      // Ce code s'exécute à chaque changement du champ imam pour remplir automatiquement
+      // les champs nom et numéro
+      $('#ecole_director').on('change', function(){
+        $('#ecole_director_name').val('');
+        $('#ecole_director_number').val('');
+        var id = this.value;
+        $.ajax({
+            url: "{{ path('select.hds') }}",
+            type: 'GET',
+            data: 'hds=' + id,
+            dataType: 'json',
+            success: function (result) {
+              $('#ecole_director_name').val(result.name);
+              $('#ecole_director_number').val(result.number);
+              console.log('ça marche');
+            },
+            error: function (xhr, status, error) {
+              console.log(error)
+            }
+          });
+
+          // On doit faire des controles sur les champs nom et numero d'Imam
+          /*En effet, lorsque l'on sélectionne un hds comme imam d'une mosquée, il ne doit plus être possible
+           *de modifier ces deux champs (nom et numéron). Il faut donc les grisés.
+           */
+          if(this.value == '')
+          {
+            $('#ecole_director_name').prop('disabled', false);
+            $('#ecole_director_number').prop('disabled', false);
+          }
+          else{
+            $('#ecole_director_name').prop('disabled', true);
+            $('#ecole_director_number').prop('disabled', true);
+          }
+        });
+      });
+
+  </script>
+{% endblock %}

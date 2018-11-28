@@ -1,0 +1,48 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Ecole/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Enregistrement d\'une nouvelle école | Orientation Authentique' %}
+
+
+{% block big_title 'Enregistrement d\'une nouvelle école' %}
+
+
+
+{% block contextual_menu %}
+  <div class="uk-background-primary uk-light uk-padding-small uk-panel">
+    <p class="uk-h4">Menu</p>
+  </div>
+  <ul uk-accordion="collapsible: true">
+    <li>
+      <a class="uk-accordion-title" href="{{ path('ecoles') }}">Ecoles</a>
+      <div class="uk-accordion-content">
+        <ul class="uk-list uk-list-divider">
+          <li><a href="{{ path('ecoles') }}">Liste</a></li>
+          <li><a href="{{ path('ecole.add') }}">Ajouter</a></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+{% endblock %}
+
+
+
+{% block content %}
+  <div class="uk-hidden@s">
+    <p uk-margin>
+      <a class="uk-button uk-button-default" href="{{ path('ecoles') }}">Liste</a>
+    </p>
+  </div>
+  <h2>Enregistrement d'une nouvelle école</h2>
+  {{ include('Admin/Ecole/_ecole-form.html.twig') }}
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}

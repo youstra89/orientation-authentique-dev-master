@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -54,11 +56,23 @@ class Commune
      */
     private $updated_at;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\HDS", mappedBy="commune")
+     */
+    private $hds;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Mosquee", mappedBy="commune")
+     */
+    private $mosquees;
+
 
     public function __construct()
     {
       $this->created_at = new \Datetime();
       $this->updated_at = new \Datetime();
+      $this->hds = new ArrayCollection();
+      $this->mosquees = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -134,6 +148,68 @@ class Commune
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|HDS[]
+     */
+    public function getHds(): Collection
+    {
+        return $this->hds;
+    }
+
+    public function addHd(HDS $hd): self
+    {
+        if (!$this->hds->contains($hd)) {
+            $this->hds[] = $hd;
+            $hd->setCommune($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHd(HDS $hd): self
+    {
+        if ($this->hds->contains($hd)) {
+            $this->hds->removeElement($hd);
+            // set the owning side to null (unless already changed)
+            if ($hd->getCommune() === $this) {
+                $hd->setCommune(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Mosquee[]
+     */
+    public function getMosquees(): Collection
+    {
+        return $this->mosquees;
+    }
+
+    public function addMosquee(Mosquee $mosquee): self
+    {
+        if (!$this->mosquees->contains($mosquee)) {
+            $this->mosquees[] = $mosquee;
+            $mosquee->setCommune($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMosquee(Mosquee $mosquee): self
+    {
+        if ($this->mosquees->contains($mosquee)) {
+            $this->mosquees->removeElement($mosquee);
+            // set the owning side to null (unless already changed)
+            if ($mosquee->getCommune() === $this) {
+                $mosquee->setCommune(null);
+            }
+        }
 
         return $this;
     }

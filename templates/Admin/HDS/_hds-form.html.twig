@@ -1,0 +1,44 @@
+{{ form_start(form, { 'attr': {'class': 'uk-grid-small'} }) }}
+  <fieldset class="uk-fieldset">
+      <div class="uk-grid">
+        <div class="uk-width-1-3@s">
+          {{ form_row(form.nom, { 'attr': {'class': 'uk-input'} }) }}
+        </div>
+        <div class="uk-width-1-3@s">
+          {{ form_row(form.pnom, { 'attr': {'class': 'uk-input'} }) }}
+        </div>
+        <div class="uk-width-1-3@s">
+          {{ form_row(form.numero, { 'attr': {'class': 'uk-input'} }) }}
+        </div>
+      </div><br>
+      <div class="uk-grid">
+        <div class="uk-width-1-4@s">
+          <label for="date">Date de naissance</label>
+          <input type="date" name="date" id="date" class="uk-input" value="{% if hds is defined %} {{ hds.dateNaissance|date('d/m/Y') }} {% else %} {{ '' }} {% endif %}">
+        </div>
+        <div class="uk-width-1-4@s">
+          {{ form_row(form.specialite, { 'attr': {'class': 'uk-input'} }) }}
+        </div>
+        <div class="uk-width-1-4@s">
+          {{ form_row(form.niveau_etude, { 'attr': {'class': 'uk-input'} }) }}
+        </div>
+        <div class="uk-width-1-4@s">
+          {{ form_row(form.commune, { 'attr': {'class': 'uk-input'} }) }}
+        </div>
+      </div><br>
+      <div class="uk-gird">
+        <div class="uk-margin">
+          <label for="">Biographie</label>
+          <textarea class="" name="biographie" id="biographie" rows="10" cols="80" required>{% if hds is defined %}{{ hds.biographie }}{% endif %}</textarea>
+          <script>
+          CKEDITOR.replace( 'biographie', {
+              language: 'fr',
+              uiColor: '#9AB8F3',
+            });
+          </script>
+        </div>
+      </div>
+      {{ form_rest(form) }}
+      <button class="uk-button uk-button-primary">{{ button|default('Enregistrer') }}</button>
+  </fieldset><br>
+{{ form_end(form) }}

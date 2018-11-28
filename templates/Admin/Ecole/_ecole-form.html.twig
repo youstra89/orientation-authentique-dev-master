@@ -1,0 +1,36 @@
+{{ form_start(form, { 'attr': {'class': 'uk-grid-small'} }) }}
+  <fieldset class="uk-fieldset">
+      <div class="uk-grid">
+        <div class="uk-width-1-4@s">
+          {{ form_row(form.nom, { 'attr': {'class': 'uk-input'} }) }}
+        </div>
+        <div class="uk-width-1-4@s">
+          {{ form_row(form.commune, { 'attr': {'class': 'uk-input'} }) }}
+        </div>
+        <div class="uk-width-1-4@s">
+          {{ form_row(form.quartier, { 'attr': {'class': 'uk-input'} }) }}
+        </div>
+        <div class="uk-width-1-4@s">
+          {{ form_row(form.annee_construction, { 'attr': {'class': 'uk-input'} }) }}
+        </div>
+      </div><br>
+      <hr class="uk-divider-icon">
+        <div class="uk-margin">
+          {{ form_row(form.description, { 'attr': {'class': 'uk-textarea', 'rows': 5, 'placeholder': 'Optionelle'} }) }}
+        </div>
+      <hr class="uk-divider-icon">
+      <div class="uk-grid">
+        <div class="uk-width-1-3@s">
+          {{ form_row(form.director, { 'attr': {'class': 'uk-input'} }) }}
+        </div>
+        <div class="uk-width-1-3@s">
+          {{ form_row(form.director_name, { 'attr': {'class': 'uk-input'} }) }}
+        </div>
+        <div class="uk-width-1-3@s">
+          {{ form_row(form.director_number, { 'attr': {'class': 'uk-input'} }) }}
+        </div>
+      </div><br>
+      {{ form_rest(form) }}
+      <button class="uk-button uk-button-primary">{{ button|default('Enregistrer') }}</button>
+  </fieldset><br>
+{{ form_end(form) }}

@@ -1,0 +1,81 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Ecole/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+
+{% block title 'Informations sur l\' école ' ~ ecole.nom ~ ' à ' ~ ecole.commune.nom ~ ' | Orientation Authentique' %}
+
+{% block big_title 'Informations sur une école' %}
+
+
+
+{% block contextual_menu %}
+  <div class="uk-background-primary uk-light uk-padding-small uk-panel">
+    <p class="uk-h4">Menu</p>
+  </div>
+  <ul uk-accordion="collapsible: true">
+    <li>
+      <a class="uk-accordion-title" href="{{ path('ecoles') }}">Ecoles</a>
+      <div class="uk-accordion-content">
+        <ul class="uk-list uk-list-divider">
+          <li><a href="{{ path('ecoles') }}">Liste</a></li>
+          <li><a href="{{ path('ecole.add') }}">Ajouter</a></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+{% endblock %}
+
+
+
+{% block content %}
+  <a href="javascript:history.back()"class="uk-button uk-button-default">Retour</A>
+  <h2>Informations école <strong>{{ ecole.nom }}</strong> à <strong>{{ ecole.commune.nom }}</strong> </h2>
+  <div uk-grid>
+    <div class="uk-overflow-auto">
+      <table class="uk-table uk-table-small uk-table-divider" uk-grid>
+        <tbody>
+          <tr>
+            <td class="uk-width-large"><strong>Nom</strong></td>
+            <td class="uk-width-xxlarge uk-margin">{{ ecole.nom }}</td>
+          </tr>
+          <tr>
+            <td><strong>Localisation</strong></td>
+            <td>{{ ecole.quartier }}, {{ ecole.commune.nom }}</td>
+          </tr>
+          <tr>
+            <td><strong>Directeur</strong></td>
+            <td>
+              {% if ecole.director %}
+                {{ ecole.director.pnom }} {{ ecole.director.nom }}, {{ ecole.director.numero }}
+              {% else %}
+                {{ ecole.directorName }} {{ ecole.directorNumber }}
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Construite en</strong></td>
+            <td>{{ ecole.anneeConstruction }}</td>
+          </tr>
+          <tr>
+            <td><strong>Description</strong></td>
+            <td>{{ ecole.description }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}
