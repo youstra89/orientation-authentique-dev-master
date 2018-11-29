@@ -14,11 +14,43 @@
 
 
 {% block content %}
-  <h2>Biographie de <strong>{{ hds.pnom }} {{ hds.nom }}</strong> </h2>
-  <div uk-grid>
-    <div class="{{ hds.pnom }}">
-      <p>{{ hds.biographie|raw }}</p>
-    </div>
+  <h2>Biographie de <strong>{{ hds.pnom }} {{ hds.nom }}</strong><br> </h2>
+    <h3 class="uk-heading-line"><span>Fiche d'identification</span></h3>
+    <div class="uk-grid">
+      <div class="uk-width-1-4@s">
+        <strong>Nom</strong><br>
+        {{ hds.nom }}
+      </div>
+      <div class="uk-width-1-4@s">
+        <strong>Prénom</strong><br>
+        {{ hds.pnom }}
+      </div>
+      <div class="uk-width-1-4@s">
+        <strong>Numéro de téléphone</strong><br>
+        {{ hds.numero }}
+      </div>
+    </div><br>
+    <div class="uk-grid">
+      <div class="uk-width-1-4@s">
+        <strong>Date de naissance</strong><br>
+        {{ hds.dateNaissance|date('d-m-Y') }}
+      </div>
+      <div class="uk-width-1-4@s">
+        <strong>Spécialité</strong><br>
+        {{ hds.specialite }}
+      </div>
+      <div class="uk-width-1-4@s">
+        <strong>Niveau d'étude</strong><br>
+        {{ hds.niveauEtude }}
+      </div>
+      <div class="uk-width-1-4@s">
+        <strong>Commune</strong><br>
+        {{ hds.commune.nom }}
+      </div>
+    </div><br>
+    <h3 class="uk-heading-line"><span>Biographie</span></h3>
+  <div class="">
+    {{ hds.biographie|raw }}
   </div>
 {% endblock %}
 

@@ -67,7 +67,7 @@ class HDS
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
 
@@ -81,12 +81,17 @@ class HDS
      */
     private $ecoles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Cours", mappedBy="hds")
+     */
+    private $courses;
+
 
     public function __construct()
     {
       $this->created_at = new \Datetime();
-      $this->updated_at = new \Datetime();
       $this->ecoles = new ArrayCollection();
+      $this->courses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -239,6 +244,37 @@ class HDS
             // set the owning side to null (unless already changed)
             if ($ecole->getDirector() === $this) {
                 $ecole->setDirector(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Cours[]
+     */
+    public function getCours(): Collection
+    {
+        return $this->courses;
+    }
+
+    public function addCour(Cours $cour): self
+    {
+        if (!$this->courses->contains($cour)) {
+            $this->courses[] = $cour;
+            $cour->setHds($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCour(Cours $cour): self
+    {
+        if ($this->courses->contains($cour)) {
+            $this->courses->removeElement($cour);
+            // set the owning side to null (unless already changed)
+            if ($cour->getHds() === $this) {
+                $cour->setHds(null);
             }
         }
 

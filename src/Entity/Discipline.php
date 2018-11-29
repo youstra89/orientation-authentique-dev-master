@@ -10,10 +10,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\VilleRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\DisciplineRepository")
  * @UniqueEntity("nom")
  */
-class Ville
+class Discipline
 {
     /**
      * @ORM\Id()
@@ -24,15 +24,9 @@ class Ville
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=3, max=255)
+     * @Assert\Length(min=5, max=255)
      */
     private $nom;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Region", inversedBy="villes")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $region;
 
     /**
      * @ORM\Column(type="datetime")
@@ -45,15 +39,20 @@ class Ville
     private $updated_at;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commune", mappedBy="ville")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Livre", mappedBy="disciplines")
      */
-    private $communes;
+    private $livres;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Cours", mappedBy="discipline")
+     */
+    private $courses;
 
     public function __construct()
     {
-      $this->created_at = new \Datetime();
-      $this->communes = new ArrayCollection();
+        $this->livres = new ArrayCollection();
+        $this->created_at = new \Datetime();
+        $this->courses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,18 +68,6 @@ class Ville
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getRegion(): ?Region
-    {
-        return $this->region;
-    }
-
-    public function setRegion(?Region $region): self
-    {
-        $this->region = $region;
 
         return $this;
     }
@@ -110,30 +97,58 @@ class Ville
     }
 
     /**
-     * @return Collection|Commune[]
+     * @return Collection|Livre[]
      */
-    public function getCommunes(): Collection
+    public function getLivres(): Collection
     {
-        return $this->communes;
+        return $this->livres;
     }
 
-    public function addCommune(Commune $commune): self
+    public function addLivre(Livre $livre): self
     {
-        if (!$this->communes->contains($commune)) {
-            $this->communes[] = $commune;
-            $commune->setVille($this);
+        if (!$this->livres->contains($livre)) {
+            $this->livres[] = $livre;
+            $livre->addDiscipline($this);
         }
 
         return $this;
     }
 
-    public function removeCommune(Commune $commune): self
+    public function removeLivre(Livre $livre): self
     {
-        if ($this->communes->contains($commune)) {
-            $this->communes->removeElement($commune);
+        if ($this->livres->contains($livre)) {
+            $this->livres->removeElement($livre);
+            $livre->removeDiscipline($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Cours[]
+     */
+    public function getCourses(): Collection
+    {
+        return $this->courses;
+    }
+
+    public function addCourse(Cours $course): self
+    {
+        if (!$this->courses->contains($course)) {
+            $this->courses[] = $course;
+            $course->setDiscipline($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourse(Cours $course): self
+    {
+        if ($this->courses->contains($course)) {
+            $this->courses->removeElement($course);
             // set the owning side to null (unless already changed)
-            if ($commune->getVille() === $this) {
-                $commune->setVille(null);
+            if ($course->getDiscipline() === $this) {
+                $course->setDiscipline(null);
             }
         }
 

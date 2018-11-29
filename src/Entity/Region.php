@@ -49,7 +49,7 @@ class Region
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
 
@@ -62,7 +62,6 @@ class Region
     public function __construct()
     {
       $this->created_at = new \Datetime();
-      $this->updated_at = new \Datetime();
       $this->villes = new ArrayCollection();
     }
 

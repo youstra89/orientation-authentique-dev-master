@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -79,7 +81,7 @@ class Mosquee
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
 
@@ -88,11 +90,16 @@ class Mosquee
      */
     private $description;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Cours", mappedBy="mosquee")
+     */
+    private $Courses;
+
 
     public function __construct()
     {
       $this->created_at = new \Datetime();
-      $this->updated_at = new \Datetime();
+      $this->Courses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -252,6 +259,37 @@ class Mosquee
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Cours[]
+     */
+    public function getCourses(): Collection
+    {
+        return $this->Courses;
+    }
+
+    public function addCourse(Cours $course): self
+    {
+        if (!$this->Courses->contains($course)) {
+            $this->Courses[] = $course;
+            $course->setMosquee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourse(Cours $course): self
+    {
+        if ($this->Courses->contains($course)) {
+            $this->Courses->removeElement($course);
+            // set the owning side to null (unless already changed)
+            if ($course->getMosquee() === $this) {
+                $course->setMosquee(null);
+            }
+        }
 
         return $this;
     }

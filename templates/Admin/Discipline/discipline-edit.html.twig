@@ -1,0 +1,27 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Discipline/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Edition d\'une discipline | Orientation Authentique' %}
+
+{% block big_title 'Edition d\'une discipline' %}
+
+
+
+{% block content %}
+  <h2>Edition d'une discipline</h2>
+  {{ include('Admin/Discipline/_discipline-form.html.twig', {button: 'Editer'}) }}
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

@@ -1,0 +1,45 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Cours/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Sélection HDS enregistrement nouveau cours | Orientation Authentique' %}
+
+{% block big_title 'Ajout d\'un nouveau cours' %}
+
+
+
+{% block content %}
+  <h2>Sélection d'une mosquée pour l'enregistrement d'un nouveau cours</h2>
+  <p>Cours fait par : <strong>{{ hds.pnom }} {{ hds.nom }}</strong> </p>
+
+  <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
+      {% for mosquee in mosquees %}
+      <div>
+        <div class="uk-card uk-card-default uk-card-small uk-card-body">
+          <div class="uk-width-auto">
+            <img class="uk-border-circle" width="40" height="40" src="/img/fahrul-azmi.jpg">
+          </div>
+          <div class="uk-card-badge uk-label"uk-tooltip="title: Année de construction de la mosquée; pos: top">{{ mosquee.anneeConstruction }}</div>
+          <h3 class="uk-card-title uk-margin-remove-bottom">{{ mosquee.nom }} </h3>
+          <p class="uk-text-meta uk-margin-remove-top">{{ mosquee.quartier ~ ', '~ mosquee.commune.nom }}</p>
+          <p></p>
+          <br>
+          <a href="{{ path('cours.add', {hdsId: hds.id, id: mosquee.id}) }}" class="uk-button uk-button-text">Sélectionner</a>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

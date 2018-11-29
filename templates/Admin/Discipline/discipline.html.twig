@@ -1,0 +1,53 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Localite/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Régions enregistrées | Orientation Authentique' %}
+
+{% block big_title 'Gestion des régions' %}
+
+
+
+{% block content %}
+  <h2>Régions enrégistrées</h2>
+  <div class="uk-hidden@s">
+    <p uk-margin>
+      <a class="uk-button uk-button-default" href="{{ path('region.add') }}">Ajouter</a>
+    </p>
+  </div>
+  <table class="uk-table uk-table-small uk-table-divider">
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Nom</th>
+        <th>Localisation</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set i = 0 %}
+      {% for region in regions %}
+        {% set i = i + 1 %}
+        <tr>
+          <td>{{ i }}</td>
+          <td>{{ region.nom }}</td>
+          <td>{{ region.localisationType }}</td>
+          <td><a href="{{ path('region.edit', {id: region.id}) }}" uk-icon="icon: file-edit" uk-tooltip="title: Editer la région; pos: top"></a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

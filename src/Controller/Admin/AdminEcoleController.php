@@ -79,7 +79,8 @@ class AdminEcoleController extends AbstractController
     }
     //>>
     return $this->render('Admin/Ecole/ecole-edit.html.twig', [
-      'form' => $form->createView(),
+      'form'  => $form->createView(),
+      'ecole' => $ecole
     ]);
   }
 

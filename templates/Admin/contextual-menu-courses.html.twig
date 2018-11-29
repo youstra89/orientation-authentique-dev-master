@@ -1,0 +1,32 @@
+<div class="uk-background-primary uk-light uk-padding-small uk-panel">
+  <p class="uk-h4">Menu</p>
+</div>
+<ul uk-accordion="collapsible: true">
+  <li>
+    <a class="uk-accordion-title" href="{{ path('disciplines') }}">Disciplines</a>
+    <div class="uk-accordion-content">
+      <ul class="uk-list uk-list-divider">
+        <li><a href="{{ path('disciplines') }}">Liste</a></li>
+        <li><a href="{{ path('discipline.add') }}">Ajouter</a></li>
+      </ul>
+    </div>
+  </li>
+  <li>
+    <a class="uk-accordion-title" href="{{ path('livres') }}">Livres</a>
+    <div class="uk-accordion-content">
+      <ul class="uk-list uk-list-divider">
+        <li><a href="{{ path('livres') }}">Liste</a></li>
+        <li><a href="{{ path('livre.add') }}">Ajouter</a></li>
+      </ul>
+    </div>
+  </li>
+  <li>
+    <a class="uk-accordion-title" href="{{ path('courses') }}">Cours</a>
+    <div class="uk-accordion-content">
+      <ul class="uk-list uk-list-divider">
+        <li><a href="{{ path('courses') }}">Liste</a></li>
+        <li><a href="{{ path('cours.add.select.hds') }}">Ajouter</a></li>
+      </ul>
+    </div>
+  </li>
+</ul>

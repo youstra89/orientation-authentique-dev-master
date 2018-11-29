@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+  <fieldset class="uk-fieldset">
+      <div class="uk-margin">
+          {{ form_row(form.nom, { 'attr': {'class': 'uk-input'} }) }}
+      </div>
+  </fieldset><br>
+  {{ form_rest(form) }}
+  <button class="uk-button uk-button-primary">{{ button|default('Enregistrer') }}</button>
+{{ form_end(form) }}

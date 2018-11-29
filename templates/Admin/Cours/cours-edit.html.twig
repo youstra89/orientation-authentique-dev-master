@@ -1,0 +1,30 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Cours/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Edition d\'un cours | Orientation Authentique' %}
+
+{% block big_title 'Edition d\'un cours' %}
+
+
+
+{% block content %}
+  <h2>Edition d'un cours</h2>
+  <div class="">
+    <strong>{{ cours.hds.pnom }} {{ cours.hds.nom }}</strong>, à la mosquée <strong>{{ cours.mosquee.nom }} {{ cours.mosquee.quartier }}</strong>
+  </div><br>
+  {{ include('Admin/Cours/_cours-form.html.twig', {button: 'Editer'}) }}
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

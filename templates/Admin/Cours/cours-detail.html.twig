@@ -1,0 +1,64 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Cours/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Régions enregistrées | Orientation Authentique' %}
+
+{% block big_title 'Gestion des régions' %}
+
+
+
+{% block content %}
+  <h2>Régions enrégistrées</h2>
+  <div class="uk-hidden@s">
+    <p uk-margin>
+      <a class="uk-button uk-button-default" href="javascript:history.back()">retour</a>
+    </p>
+  </div>
+  <h3 class="uk-heading-line"><span>Détails sur un cours</span></h3>
+  <div class="uk-grid">
+    <div class="uk-width-1-4@s">
+      <strong>Nom</strong><br>
+      {{ cours.hds.nom }}
+    </div>
+    <div class="uk-width-1-4@s">
+      <strong>Prénom</strong><br>
+      {{ cours.hds.pnom }}
+    </div>
+    <div class="uk-width-1-4@s">
+      <strong>Discipline</strong><br>
+      {{ cours.discipline.nom }}
+    </div>
+  </div><br>
+  <div class="uk-grid">
+    <div class="uk-width-1-4@s">
+      <strong>Mosquée</strong><br>
+      {{ cours.mosquee.nom }}
+    </div>
+    <div class="uk-width-1-4@s">
+      <strong>Jour</strong><br>
+      {{ cours.getJourCoursType }}
+    </div>
+    <div class="uk-width-1-4@s">
+      <strong>Heure</strong><br>
+      {{ cours.getHeureCoursType }}
+    </div>
+    <div class="uk-width-1-4@s">
+      <strong>Livre étudié</strong><br>
+      {{ cours.livre.nom }}
+    </div>
+  </div><br>
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

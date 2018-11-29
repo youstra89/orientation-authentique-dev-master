@@ -1,0 +1,28 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Cours/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Ajout d\'un nouveau cours | Orientation Authentique' %}
+
+{% block big_title 'Ajout d\'un nouveau cours' %}
+
+
+
+{% block content %}
+  <h2>Ajout d'un nouveau cours</h2>
+  <p><strong>{{ hds.pnom }} {{ hds.nom }} </strong> à la mosquée  <strong>{{ mosquee.nom }} </strong>, {{ mosquee.commune.nom }} au quartier {{ mosquee.quartier }}</p>
+  {{ include('Admin/Cours/_cours-form.html.twig') }}
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

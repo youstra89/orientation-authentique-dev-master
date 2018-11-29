@@ -52,7 +52,7 @@ class Commune
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
 
@@ -70,7 +70,6 @@ class Commune
     public function __construct()
     {
       $this->created_at = new \Datetime();
-      $this->updated_at = new \Datetime();
       $this->hds = new ArrayCollection();
       $this->mosquees = new ArrayCollection();
     }

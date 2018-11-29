@@ -25,7 +25,7 @@ class Ecole
     private $nom;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Commune", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Commune")
      * @ORM\JoinColumn(nullable=false)
      */
     private $commune;
@@ -57,7 +57,7 @@ class Ecole
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
 
@@ -75,7 +75,6 @@ class Ecole
     public function __construct()
     {
       $this->created_at = new \Datetime();
-      $this->updated_at = new \Datetime();
     }
 
 

@@ -1,0 +1,54 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/Cours/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Sélection HDS enregistrement nouveau cours | Orientation Authentique' %}
+
+{% block big_title 'Ajout d\'un nouveau cours' %}
+
+
+
+{% block content %}
+  <h2>Sélection d'un homme de science pour l'enregistrement d'un nouveau cours</h2>
+  <table class="uk-table uk-table-small uk-table-divider">
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Nom</th>
+        <th>NE</th>
+        <th>Spécialité</th>
+        <th>Commune</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set i = 0 %}
+      {% for hds in hommes %}
+        {% set i = i + 1 %}
+        <tr>
+          <td>{{ i }}</td>
+          <td>{{ hds.nom }} {{ hds.pnom }}</td>
+          <td>{{ hds.dateNaissance|date('d-m-Y') }}</td>
+          <td>{{ hds.specialite }}</td>
+          <td>{{ hds.commune.nom }}</td>
+          <td>
+            <a href="{{ path('cours.add.select.mosquee', {id: hds.id}) }}" uk-icon="icon: plus" uk-tooltip="title: Ajouter un cours pour cet HDS; pos: top"></a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

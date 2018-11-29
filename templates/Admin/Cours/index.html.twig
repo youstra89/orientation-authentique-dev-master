@@ -1,0 +1,79 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'admin-base.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Administration des cours | Orientation Authentique' %}
+
+{% block big_title 'Gestion des cours' %}
+
+
+
+{% block notification %}
+  {% for message in app.flashes('success') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+
+
+
+{% block contextual_menu %}
+  {% include('Admin/contextual-menu-courses.html.twig') %}
+{% endblock %}
+
+
+{% block content %}
+  <h2>courss enrégistrées</h2>
+  <div class="uk-hidden@s">
+    <p uk-margin>
+      <a class="uk-button uk-button-default" href="{{ path('cours.add.select.hds') }}">Ajouter</a>
+    </p>
+  </div>
+  <table class="uk-table uk-table-small uk-table-divider">
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Discipline</th>
+        <th>HDS</th>
+        <th>Mosquée</th>
+        <th>Jour/Heure</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set i = 0 %}
+      {% for cours in courses %}
+        {% set i = i + 1 %}
+        <tr>
+          <td>{{ i }}</td>
+          <td>{{ cours.discipline.nom }}</td>
+          <td>{{ cours.hds.pnom }} {{ cours.hds.nom }}</td>
+          <td>{{ cours.mosquee.nom }}</td>
+          <td>{{ cours.getJourCoursType }}, {{ cours.getHeureCoursType }}</td>
+          <td>
+            <a href="{{ path('cours.edit', {id: cours.id}) }}" uk-icon="icon: file-edit" uk-tooltip="title: Editer le cours; pos: top"></a>
+            <a href="{{ path('cours.details', {id: cours.id}) }}" uk-icon="icon: file-text" uk-tooltip="title: Voir plus de détails; pos: top"></a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

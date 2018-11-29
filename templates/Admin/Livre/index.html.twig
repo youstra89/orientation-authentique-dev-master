@@ -1,0 +1,81 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'admin-base.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Administration des cours | Orientation Authentique' %}
+
+{% block big_title 'Gestion des cours' %}
+
+
+
+{% block notification %}
+  {% for message in app.flashes('success') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+
+
+{% block contextual_menu %}
+  {% include('Admin/contextual-menu-courses.html.twig') %}
+{% endblock %}
+
+
+{% block content %}
+  <h2>livres enrégistrées</h2>
+  <div class="uk-hidden@s">
+    <p uk-margin>
+      <a class="uk-button uk-button-default" href="{{ path('livre.add') }}">Ajouter</a>
+    </p>
+  </div>
+  <table class="uk-table uk-table-small uk-table-divider">
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Nom</th>
+        <th>Auteur</th>
+        <th>Disciplines</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set i = 0 %}
+      {% for livre in livres %}
+        {% set i = i + 1 %}
+        <tr>
+          <td>{{ i }}</td>
+          <td>{{ livre.nom }}</td>
+          <td>{{ livre.author }}</td>
+          <td>
+            {% for discipline in livre.disciplines %}
+              {{ discipline.nom }},
+            {% endfor %}
+          </td>
+          <td>
+            <a href="{{ path('livre.edit', {id: livre.id}) }}" uk-icon="icon: file-edit" uk-tooltip="title: Editer la région; pos: top"></a>
+            <a href="{{ path('livre.edit', {id: livre.id}) }}" uk-icon="icon: file-text" uk-tooltip="title: Voir le support; pos: top"></a>
+            <a href="{{ path('livre.edit', {id: livre.id}) }}" uk-icon="icon: file-text" uk-tooltip="title: Ajouter le support; pos: top"></a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+
+
+{% block body %}
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}
