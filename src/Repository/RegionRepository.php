@@ -22,19 +22,15 @@ class RegionRepository extends ServiceEntityRepository
 //    /**
 //     * @return Region[] Returns an array of Region objects
 //     */
-    /*
-    public function findByExampleField($value)
+
+    public function myFindAllQuery()
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('r.nom', 'ASC')
             ->getQuery()
-            ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Region

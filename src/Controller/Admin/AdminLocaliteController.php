@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 /**
  * @Route("/admin/localite")
  */
@@ -29,10 +31,15 @@ class AdminLocaliteController extends AbstractController
   /**
    * @Route("/region", name="regions", methods="GET")
    */
-  public function regions(Request $request): Response
+  public function regions(Request $request, PaginatorInterface $paginator): Response
   {
     $em = $this->getDoctrine()->getManager();
-    $regions = $this->getDoctrine()->getManager()->getRepository(Region::class)->findAll();
+    $repoRegion = $em->getRepository(Region::class);
+    $regions = $paginator->paginate(
+      $repoRegion->myFindAllQuery(),
+      $request->query->getInt('page', 1),
+      12
+    );
 
     return $this->render('Admin/Localite/regions.html.twig', [
       'regions' => $regions
@@ -54,7 +61,7 @@ class AdminLocaliteController extends AbstractController
       $em->persist($region);
       $em->flush();
       $this->addFlash('success', 'La région a bien été enregistrée.');
-      return $this->redirectToRoute('localite');
+      return $this->redirectToRoute('region.add');
     }
     return $this->render('Admin/Localite/region-add.html.twig', [
       'form' => $form->createView()
@@ -76,7 +83,7 @@ class AdminLocaliteController extends AbstractController
       $region->setUpdatedAt(new \DateTime());
       $em->flush();
       $this->addFlash('success', 'Mise à jour de la region réussie.');
-      return $this->redirectToRoute('localite');
+      return $this->redirectToRoute('regions');
     }
     return $this->render('Admin/Localite/région-edit.html.twig', [
       'form' => $form->createView()
@@ -88,10 +95,15 @@ class AdminLocaliteController extends AbstractController
     /**
      * @Route("/ville", name="villes", methods="GET")
      */
-    public function villes(Request $request): Response
+    public function villes(Request $request, PaginatorInterface $paginator): Response
     {
       $em = $this->getDoctrine()->getManager();
-      $villes = $this->getDoctrine()->getManager()->getRepository(Ville::class)->findAll();
+      $repoVille = $em->getRepository(Ville::class);
+      $villes = $paginator->paginate(
+        $repoVille->myFindAllQuery(),
+        $request->query->getInt('page', 1),
+        12
+      );
 
       return $this->render('Admin/Localite/villes.html.twig', [
         'villes' => $villes
@@ -113,7 +125,7 @@ class AdminLocaliteController extends AbstractController
         $em->persist($ville);
         $em->flush();
         $this->addFlash('success', 'La ville a bien été enregistrée.');
-        return $this->redirectToRoute('localite');
+        return $this->redirectToRoute('ville.add');
       }
       return $this->render('Admin/Localite/ville-add.html.twig', [
         'form' => $form->createView()
@@ -136,7 +148,7 @@ class AdminLocaliteController extends AbstractController
         $ville->setUpdatedAt(new \DateTime());
         $em->flush();
         $this->addFlash('success', 'Mise à jour de la ville réussie.');
-        return $this->redirectToRoute('localite');
+        return $this->redirectToRoute('villes');
       }
       return $this->render('Admin/Localite/ville-edit.html.twig', [
         'form' => $form->createView()
@@ -148,10 +160,15 @@ class AdminLocaliteController extends AbstractController
     /**
      * @Route("/commune", name="communes", methods="GET")
      */
-    public function communes(Request $request): Response
+    public function communes(Request $request, PaginatorInterface $paginator): Response
     {
       $em = $this->getDoctrine()->getManager();
-      $communes = $this->getDoctrine()->getManager()->getRepository(Commune::class)->findAll();
+      $repoCommune = $em->getRepository(Commune::class);
+      $communes = $paginator->paginate(
+        $repoCommune->myFindAllQuery(),
+        $request->query->getInt('page', 1),
+        12
+      );
 
       return $this->render('Admin/Localite/communes.html.twig', [
         'communes' => $communes
@@ -177,7 +194,7 @@ class AdminLocaliteController extends AbstractController
         $em->persist($commune);
         $em->flush();
         $this->addFlash('success', 'La commune a bien été enregistrée.');
-        return $this->redirectToRoute('localite');
+        return $this->redirectToRoute('villes');
       }
       return $this->render('Admin/Localite/commune-add.html.twig', [
         'form' => $form->createView()
@@ -200,7 +217,7 @@ class AdminLocaliteController extends AbstractController
         $commune->setUpdatedAt(new \DateTime());
         $em->flush();
         $this->addFlash('success', 'Mise à jour de la commune réussie.');
-        return $this->redirectToRoute('localite');
+        return $this->redirectToRoute('communes');
       }
       return $this->render('Admin/Localite/commune-edit.html.twig', [
         'form' => $form->createView()
