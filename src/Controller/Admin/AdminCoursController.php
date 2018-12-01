@@ -63,7 +63,10 @@ class AdminCoursController extends AbstractController
   public function cours_add(Request $request, Mosquee $mosquee, int $hdsId): Response
   {
     $em = $this->getDoctrine()->getManager();
-    $hds = $em->getRepository(HDS::class)->find($hdsId);
+    $repoHDS = $em->getRepository(HDS::class);
+    $repoCours = $em->getRepository(Cours::class);
+    $repoMosquee = $em->getRepository(Mosquee::class);
+    $hds = $repoHDS->find($hdsId);
     $cours = new Cours();
     $cours->setHds($hds);
     $cours->setMosquee($mosquee);
@@ -72,9 +75,70 @@ class AdminCoursController extends AbstractController
 
     if($form->isSubmitted() && $form->isValid())
     {
-      $em->persist($cours);
+      /* Avant d'enregistrer un cours, plusierus vérification doivent être faites:
+       *  1 - On vérifie que l'hds et la mosquée sont dans la même commune, où la même région
+       *  2 - On vérifie ensuite la disponibilité de l'hds pour le jour et l'heure choisis
+       *  3 - Et enfin, on vérifie la disponibilité de la mosquée pour le jour et l'heure choisis
+       */
+
+      // Première vérification
+      if($hds->getCommune()->getId() !== $mosquee->getCommune()->getId())
+      {
+        /* On entre dans cette condition si hds et la mosquée ne sont pas dans la même commune
+         *  Il y a alors deux cas possibles:
+         *    1 - l'hds et la mosquée sont à Abidjan, auquel cas, on enregistre
+         *    2 - l'un des deux ou même tous les deux ne sont pas à Abidjan, auquel cas en rejette
+         */
+         if($hds->getCommune()->getVille()->getRegion()->getId() === $mosquee->getCommune()->getVille()->getRegion()->getId() && $mosquee->getCommune()->getVille()->getNom() === 'Abidjan')
+         {
+           // Deuxième vérification
+           // Disponibilité hds pour le jour et l'heure choisis
+           $coursHDS = $repoCours->findBy(['hds_id' => $hdsId, 'jour' => $cours->getJour(), 'heure' => $cours->getHeure()]);
+           if(!empty($coursHDS))
+           {
+             $this->addFlash('error', $hds->getPnom().' '.$hds->getNom().' n\'est pas disponible ce jour à cette heure. Il a déjà un autre cours.');
+             return $this->redirectToRoute('cours.add', ['hdsId' => $hdsId, 'id' => $mosquee->getId()]);
+           }
+
+           // Troisième vérification
+           // Disponibilité mosquee pour le jour et l'heure choisis
+           $coursMosquee = $repoCours->findBy(['mosquee_id' => $mosquee->getId(), 'jour' => $cours->getJour(), 'heure' => $cours->getHeure()]);
+           if(!empty($coursMosquee))
+           {
+             $this->addFlash('error', 'La mosquée n\'est pas disponible ce jour à cette heure. Il y a un autre cours à cette heure.');
+             return $this->redirectToRoute('cours.add', ['hdsId' => $hdsId, 'id' => $mosquee->getId()]);
+           }
+           $em->persist($cours);
+           $this->addFlash('success', 'La cours a bien été enregistrée.');
+         }
+         else{
+           $this->addFlash('error', 'L\'homme de science et la mosquée doivent être de la même commune, sauf ceux d\'Abidjan qui peuvent être dans des communes différentes.');
+           return $this->redirectToRoute('cours.add.select.mosquee', ['id' => $hdsId]);
+         }
+      }
+      else{
+        // Deuxième vérification
+        // Disponibilité hds pour le jour et l'heure choisis
+        $coursHds = $repoCours->findBy(['hds' => $hdsId, 'jour' => $cours->getJour(), 'heure' => $cours->getHeure()]);
+        if(!empty($coursHds))
+        {
+          $this->addFlash('error', $hds->getPnom().' '.$hds->getNom().' n\'est pas disponible ce jour à cette heure. Il a déjà un autre cours.');
+          return $this->redirectToRoute('cours.add', ['hdsId' => $hdsId, 'id' => $mosquee->getId()]);
+        }
+
+        // Troisième vérification
+        // Disponibilité mosquee pour le jour et l'heure choisis
+        $coursMosquee = $repoCours->findBy(['mosquee' => $mosquee->getId(), 'jour' => $cours->getJour(), 'heure' => $cours->getHeure()]);
+        dump($coursMosquee);
+        if(!empty($coursMosquee))
+        {
+          $this->addFlash('error', 'La mosquée n\'est pas disponible ce jour à cette heure. Il y a un autre cours à cette heure.');
+          return $this->redirectToRoute('cours.add', ['hdsId' => $hdsId, 'id' => $mosquee->getId()]);
+        }
+        $em->persist($cours);
+        $this->addFlash('success', 'La cours a bien été enregistrée.');
+      }
       $em->flush();
-      $this->addFlash('success', 'La cours a bien été enregistrée.');
       return $this->redirectToRoute('courses');
     }
     return $this->render('Admin/Cours/cours-add.html.twig', [

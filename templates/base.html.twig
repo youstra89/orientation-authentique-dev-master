@@ -132,12 +132,17 @@
       </div>
 
       {% block body %}
-        <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light"
-           data-src="https://images.unsplash.com/photo-1490822180406-880c226c150b?fit=crop&w=650&h=433&q=80"
-           data-srcset="https://images.unsplash.com/photo-1490822180406-880c226c150b?fit=crop&w=650&h=433&q=80 650w,
-                        https://images.unsplash.com/photo-1490822180406-880c226c150b?fit=crop&w=1300&h=866&q=80 1300w"
-           data-sizes="(min-width: 650px) 650px, 100vw" uk-img>
-          <h1>Orientation authentique</h1>
+        <!-- <div uk-parallax="bgy: -200">
+          <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light"
+          data-src="/img/fahrul-azmi.jpg"
+          data-srcset="/img/fahrul-azmi.jpg 650w,
+          /img/fahrul-azmi.jpg 1300w"
+          data-sizes="(min-width: 650px) 650px, 100vw" uk-img>
+            <h1>Orientation Authentique</h1>
+          </div>
+        </div> -->
+        <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200" style="background-image: url('/img/fahrul-azmi.jpg');">
+          <h1 class="uk-width-1-2@m uk-text-right uk-heading-primary uk-margin-auto uk-margin-auto-vertical">Orientation Authentique</h1>
         </div>
         <div class="uk-container uk-padding-small">
           <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Suivez une bonne orientation</span></h1>
