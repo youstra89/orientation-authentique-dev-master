@@ -28,7 +28,7 @@ class AdminCoursController extends AbstractController
   {
     $em = $this->getDoctrine()->getManager();
     $repoCours = $em->getRepository(Cours::class);
-    $regions = $paginator->paginate(
+    $courses = $paginator->paginate(
       $repoCours->myFindAllQuery(),
       $request->query->getInt('page', 1),
       12
