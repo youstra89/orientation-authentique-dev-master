@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 /**
  * @Route("/admin/cours")
  */
@@ -22,9 +24,15 @@ class AdminCoursController extends AbstractController
   /**
    * @Route("/", name="courses", methods="GET")
    */
-  public function index(): Response
+  public function index(Request $request, PaginatorInterface $paginator): Response
   {
-    $courses  = $this->getDoctrine()->getManager()->getRepository(Cours::class)->findAll();
+    $em = $this->getDoctrine()->getManager();
+    $repoCours = $em->getRepository(Cours::class);
+    $regions = $paginator->paginate(
+      $repoCours->myFindAllQuery(),
+      $request->query->getInt('page', 1),
+      12
+    );
     return $this->render('Admin/Cours/index.html.twig', [
       'courses' => $courses
     ]);

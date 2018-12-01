@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 /**
  * @Route("/admin/hommes-de-science")
  */
@@ -21,10 +23,15 @@ class AdminHDSController extends AbstractController
   /**
    * @Route("/", name="hds", methods="GET")
    */
-  public function index(): Response
+  public function index(Request $request, PaginatorInterface $paginator): Response
   {
     $em = $this->getDoctrine()->getManager();
-    $hommes = $this->getDoctrine()->getManager()->getRepository(HDS::class)->findAll();
+    $repoHDS = $em->getRepository(HDS::class);
+    $hommes = $paginator->paginate(
+      $repoHDS->myFindAllQuery(),
+      $request->query->getInt('page', 1),
+      12
+    );
     return $this->render('Admin/HDS/index.html.twig', [
       'hommes' => $hommes
     ]);

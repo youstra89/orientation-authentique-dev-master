@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 /**
  * @Route("/admin/cours")
  */
@@ -18,10 +20,15 @@ class AdminDisciplineController extends AbstractController
   /**
    * @Route("/discipline", name="disciplines", methods="GET")
    */
-  public function disciplines(Request $request): Response
+  public function disciplines(Request $request, PaginatorInterface $paginator): Response
   {
     $em = $this->getDoctrine()->getManager();
-    $disciplines = $this->getDoctrine()->getManager()->getRepository(Discipline::class)->findAll();
+    $repoDiscipline = $em->getRepository(Discipline::class);
+    $disciplines = $paginator->paginate(
+      $repoDiscipline->myFindAllQuery(),
+      $request->query->getInt('page', 1),
+      12
+    );
 
     return $this->render('Admin/Discipline/index.html.twig', [
       'disciplines' => $disciplines

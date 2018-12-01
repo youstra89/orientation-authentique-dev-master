@@ -22,19 +22,13 @@ class MosqueeRepository extends ServiceEntityRepository
 //    /**
 //     * @return Mosquee[] Returns an array of Mosquee objects
 //     */
-    /*
-    public function findByExampleField($value)
+    public function myFindAllQuery()
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('m.nom', 'ASC')
             ->getQuery()
-            ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Mosquee

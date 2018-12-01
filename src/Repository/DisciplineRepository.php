@@ -22,19 +22,13 @@ class DisciplineRepository extends ServiceEntityRepository
 //    /**
 //     * @return Discipline[] Returns an array of Discipline objects
 //     */
-    /*
-    public function findByExampleField($value)
+    public function myFindAllQuery()
     {
         return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('d.nom', 'ASC')
             ->getQuery()
-            ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Discipline

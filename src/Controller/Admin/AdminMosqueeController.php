@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 /**
  * @Route("/admin/mosquee")
  */
@@ -20,10 +22,15 @@ class AdminMosqueeController extends AbstractController
   /**
    * @Route("/", name="mosquees", methods="GET")
    */
-  public function index(): Response
+  public function index(Request $request, PaginatorInterface $paginator): Response
   {
     $em = $this->getDoctrine()->getManager();
-    $mosquees = $this->getDoctrine()->getManager()->getRepository(Mosquee::class)->findAll();
+    $repoMosquee = $em->getRepository(Mosquee::class);
+    $mosquees = $paginator->paginate(
+      $repoMosquee->myFindAllQuery(),
+      $request->query->getInt('page', 1),
+      12
+    );
     return $this->render('Admin/Mosquee/index.html.twig', [
       'mosquees' => $mosquees
     ]);

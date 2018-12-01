@@ -22,19 +22,13 @@ class EcoleRepository extends ServiceEntityRepository
 //    /**
 //     * @return Ecole[] Returns an array of Ecole objects
 //     */
-    /*
-    public function findByExampleField($value)
+    public function myFindAllQuery()
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('e.nom', 'ASC')
             ->getQuery()
-            ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Ecole

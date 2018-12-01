@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 /**
  * @Route("/admin/cours")
  */
@@ -18,10 +20,15 @@ class AdminLivreController extends AbstractController
   /**
    * @Route("/livre", name="livres", methods="GET")
    */
-  public function livres(Request $request): Response
+  public function livres(Request $request, PaginatorInterface $paginator): Response
   {
     $em = $this->getDoctrine()->getManager();
-    $livres = $this->getDoctrine()->getManager()->getRepository(Livre::class)->findAll();
+    $repoLivre = $em->getRepository(Livre::class);
+    $livres = $paginator->paginate(
+      $repoLivre->myFindAllQuery(),
+      $request->query->getInt('page', 1),
+      12
+    );
 
     return $this->render('Admin/Livre/index.html.twig', [
       'livres' => $livres

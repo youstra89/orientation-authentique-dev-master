@@ -22,19 +22,14 @@ class HDSRepository extends ServiceEntityRepository
 //    /**
 //     * @return HDS[] Returns an array of HDS objects
 //     */
-    /*
-    public function findByExampleField($value)
+    public function myFindAllQuery()
     {
         return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('h.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('h.nom', 'ASC')
+            ->addOrderBy('h.pnom', 'ASC')
             ->getQuery()
-            ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?HDS
