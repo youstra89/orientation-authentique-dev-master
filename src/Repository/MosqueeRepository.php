@@ -55,15 +55,12 @@ class MosqueeRepository extends ServiceEntityRepository
         return $query->getQuery();
     }
 
-    /*
-    public function findOneBySomeField($value): ?Mosquee
+    public function myCount()
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('count(m.id)')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getSingleScalarResult()
         ;
     }
-    */
 }

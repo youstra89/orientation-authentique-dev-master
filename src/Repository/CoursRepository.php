@@ -61,15 +61,12 @@ public function myFindAllQuery(CoursSearch $search)
 }
 
 
-    /*
-    public function findOneBySomeField($value): ?Cours
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+public function myCount()
+{
+    return $this->createQueryBuilder('c')
+        ->select('count(c.id)')
+        ->getQuery()
+        ->getSingleScalarResult()
+    ;
+}
 }

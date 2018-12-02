@@ -22,6 +22,65 @@
 
 
 {% block body %}
+<div class="uk-container">
+  <table class="uk-table uk-table-middle uk-table-divider">
+    <thead>
+        <tr>
+            <th class="uk-width-small">Eléments</th>
+            <th>Descriptions</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Regions</strong></td>
+            <td>Il y a, actuellement dans la base de données, <strong>{{ regions }}</strong> enregistrées.</td>
+            <td><a href="{{ path('regions') }}" class="uk-button uk-button-primary" type="button">Plus...</a></td>
+        </tr>
+        <tr>
+            <td><strong>Villes</strong></td>
+            <td>Il y a, actuellement dans la base de données, <strong>{{ villes }}</strong> enregistrées.</td>
+            <td><a href="{{ path('villes') }}" class="uk-button uk-button-primary" type="button">Plus...</a></td>
+        </tr>
+        <tr>
+            <td><strong>Communes</strong></td>
+            <td>Il y a, actuellement dans la base de données, <strong>{{ communes }}</strong> enregistrées.</td>
+            <td><a href="{{ path('communes') }}" class="uk-button uk-button-primary" type="button">Plus...</a></td>
+        </tr>
+        <tr>
+            <td><strong>HDS</strong></td>
+            <td>HDS, désigne les hommes de science d'ici. Nous en avons, <strong>{{ hommes }}</strong> d'enregistrés.</td>
+            <td><a href="{{ path('hds') }}" class="uk-button uk-button-primary" type="button">Plus...</a></td>
+        </tr>
+        <tr>
+            <td><strong>Mosquées</strong></td>
+            <td>Il s'agit des mosquées dont nous avons la certitude qu'elles suivent la voie des pieux prédécésseurs. Nous en avons, <strong>{{ mosquees }}</strong> d'enregistrés.</td>
+            <td><a href="{{ path('mosquees') }}" class="uk-button uk-button-primary" type="button">Plus...</a></td>
+        </tr>
+        <tr>
+            <td><strong>Ecoles</strong></td>
+            <td>Ce sont les écoles qui enseignent la sunna et aussi qui incite à la pratiquer. Il y en a au total <strong>{{ ecoles }}</strong> enregistrées.</td>
+            <td><a href="{{ path('ecoles') }}" class="uk-button uk-button-primary" type="button">Plus...</a></td>
+        </tr>
+        <tr>
+            <td><strong>Livres</strong></td>
+            <td>Les livres qui sont étudiés dans les mosquées. <strong>{{ livres }}</strong> livres au total.</td>
+            <td><a href="{{ path('livres') }}" class="uk-button uk-button-primary" type="button">Plus...</a></td>
+        </tr>
+        <tr>
+            <td><strong>Cours</strong></td>
+            <td>Il s'agit des cours dispensés par les hommes de science de l'ensemble du territoire.Il y a actuellement <strong>{{ courses }}</strong> cours enregistrés.</td>
+            <td><a href="{{ path('courses') }}" class="uk-button uk-button-primary" type="button">Plus...</a></td>
+        </tr>
+        <tr>
+            <td><strong>Discipline</strong></td>
+            <td>Les disciplines sont les domaines de science dans lesquels interviennent les HDS. Nous en avons <strong>{{ disciplines }}</strong> pour le moment.</td>
+            <td><a href="{{ path('disciplines') }}" class="uk-button uk-button-primary" type="button">Plus...</a></td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
 {% endblock %}
 
 

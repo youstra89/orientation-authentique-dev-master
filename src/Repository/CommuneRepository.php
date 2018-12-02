@@ -48,16 +48,12 @@ class CommuneRepository extends ServiceEntityRepository
         return $query->getQuery();
     }
 
-
-    /*
-    public function findOneBySomeField($value): ?Commune
+    public function myCount()
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('count(c.id)')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getSingleScalarResult()
         ;
     }
-    */
 }

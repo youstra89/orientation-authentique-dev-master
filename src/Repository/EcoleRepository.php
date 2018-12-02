@@ -55,15 +55,12 @@ public function myFindAllQuery(EcoleSearch $search)
     return $query->getQuery();
 }
 
-    /*
-    public function findOneBySomeField($value): ?Ecole
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+public function myCount()
+{
+    return $this->createQueryBuilder('e')
+        ->select('count(e.id)')
+        ->getQuery()
+        ->getSingleScalarResult()
+    ;
+}
 }

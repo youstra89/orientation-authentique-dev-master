@@ -23,47 +23,46 @@ class HDSRepository extends ServiceEntityRepository
 //    /**
 //     * @return HDS[] Returns an array of HDS objects
 //     */
-public function myFindAllQuery(HDSSearch $search)
-{
-    $query = $this->createQueryBuilder('h')
-        ->orderBy('h.nom', 'ASC');
+    public function myFindAllQuery(HDSSearch $search)
+    {
+        $query = $this->createQueryBuilder('h')
+            ->orderBy('h.nom', 'ASC');
 
-    if($search->getNom()){
-      $query = $query
-        ->andWhere('h.nom LIKE :nom OR h.pnom LIKE :nom')
-        ->setParameter('nom', '%'.$search->getNom().'%');
+        if($search->getNom()){
+          $query = $query
+            ->andWhere('h.nom LIKE :nom OR h.pnom LIKE :nom')
+            ->setParameter('nom', '%'.$search->getNom().'%');
+        }
+
+        if($search->getCommune()){
+          $query = $query
+            ->andWhere('h.commune = :commune')
+            ->setParameter('commune', $search->getCommune()->getId());
+        }
+
+        if($search->getRegion()){
+          $query = $query
+            ->join('h.commune', 'c')
+            ->addSelect('c')
+            ->join('c.ville', 'v')
+            ->addSelect('v')
+            ->join('v.region', 'r')
+            ->addSelect('r')
+            ->andWhere('v.region = :region')
+            ->setParameter('region', $search->getRegion()->getId());
+        }
+
+        return $query->getQuery();
     }
 
-    if($search->getCommune()){
-      $query = $query
-        ->andWhere('h.commune = :commune')
-        ->setParameter('commune', $search->getCommune()->getId());
-    }
 
-    if($search->getRegion()){
-      $query = $query
-        ->join('h.commune', 'c')
-        ->addSelect('c')
-        ->join('c.ville', 'v')
-        ->addSelect('v')
-        ->join('v.region', 'r')
-        ->addSelect('r')
-        ->andWhere('v.region = :region')
-        ->setParameter('region', $search->getRegion()->getId());
-    }
-
-    return $query->getQuery();
-}
-
-    /*
-    public function findOneBySomeField($value): ?HDS
+    public function myCount()
     {
         return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('count(h.id)')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getSingleScalarResult()
         ;
     }
-    */
+
 }
