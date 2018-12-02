@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Commune;
+use App\Entity\Search\CommuneSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -23,12 +24,28 @@ class CommuneRepository extends ServiceEntityRepository
 //     * @return Commune[] Returns an array of Commune objects
 //     */
 
-    public function myFindAllQuery()
+    public function myFindAllQuery(CommuneSearch $search)
     {
-        return $this->createQueryBuilder('c')
-            ->orderBy('c.nom', 'ASC')
-            ->getQuery()
-        ;
+        $query = $this->createQueryBuilder('c')
+            ->orderBy('c.nom', 'ASC');
+
+        if($search->getNom()){
+          $query = $query
+            ->andWhere('c.nom LIKE :nom')
+            ->setParameter('nom', '%'.$search->getNom().'%');
+        }
+
+        if($search->getRegion()){
+          $query = $query
+            ->join('c.ville', 'v')
+            ->addSelect('v')
+            ->join('v.region', 'r')
+            ->addSelect('r')
+            ->andWhere('v.region = :region')
+            ->setParameter('region', $search->getRegion()->getId());
+        }
+
+        return $query->getQuery();
     }
 
 

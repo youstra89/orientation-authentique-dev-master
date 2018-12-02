@@ -6,8 +6,10 @@ use App\Entity\Region;
 use App\Form\RegionType;
 use App\Entity\Ville;
 use App\Form\VilleType;
+use App\Entity\Search\CommuneSearch;
 use App\Entity\Commune;
 use App\Form\CommuneType;
+use App\Form\CommuneSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -163,15 +165,19 @@ class AdminLocaliteController extends AbstractController
     public function communes(Request $request, PaginatorInterface $paginator): Response
     {
       $em = $this->getDoctrine()->getManager();
+      $search = new CommuneSearch();
+      $form = $this->createForm(CommuneSearchType::class, $search);
+      $form->handleRequest($request);
       $repoCommune = $em->getRepository(Commune::class);
       $communes = $paginator->paginate(
-        $repoCommune->myFindAllQuery(),
+        $repoCommune->myFindAllQuery($search),
         $request->query->getInt('page', 1),
         12
       );
 
       return $this->render('Admin/Localite/communes.html.twig', [
-        'communes' => $communes
+        'communes' => $communes,
+        'form'     => $form->createView()
       ]);
     }
 

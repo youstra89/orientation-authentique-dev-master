@@ -3,9 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\HDS;
+use App\Entity\Search\CoursSearch;
 use App\Entity\Cours;
 use App\Entity\Mosquee;
 use App\Form\CoursType;
+use App\Form\CoursSearchType;
 use App\Repository\HDSRepository;
 use App\Repository\CoursRepository;
 use App\Repository\MosqueeRepository;
@@ -27,14 +29,18 @@ class AdminCoursController extends AbstractController
   public function index(Request $request, PaginatorInterface $paginator): Response
   {
     $em = $this->getDoctrine()->getManager();
+    $search = new CoursSearch();
+    $form = $this->createForm(CoursSearchType::class, $search);
+    $form->handleRequest($request);
     $repoCours = $em->getRepository(Cours::class);
     $courses = $paginator->paginate(
-      $repoCours->myFindAllQuery(),
+      $repoCours->myFindAllQuery($search),
       $request->query->getInt('page', 1),
       12
     );
     return $this->render('Admin/Cours/index.html.twig', [
-      'courses' => $courses
+      'courses' => $courses,
+      'form'   => $form->createView()
     ]);
   }
 

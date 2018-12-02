@@ -3,7 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Ecole;
+use App\Entity\Search\EcoleSearch;
 use App\Form\EcoleType;
+use App\Form\EcoleSearchType;
 use App\Entity\Commune;
 use App\Repository\EcoleRepository;
 use App\Repository\CommuneRepository;
@@ -25,14 +27,18 @@ class AdminEcoleController extends AbstractController
   public function index(Request $request, PaginatorInterface $paginator): Response
   {
     $em = $this->getDoctrine()->getManager();
+    $search = new EcoleSearch();
+    $form = $this->createForm(EcoleSearchType::class, $search);
+    $form->handleRequest($request);
     $repoEcole = $em->getRepository(Ecole::class);
     $ecoles = $paginator->paginate(
-      $repoEcole->myFindAllQuery(),
+      $repoEcole->myFindAllQuery($search),
       $request->query->getInt('page', 1),
       12
     );
     return $this->render('Admin/Ecole/index.html.twig', [
-      'ecoles' => $ecoles
+      'ecoles' => $ecoles,
+      'form'   => $form->createView()
     ]);
   }
 

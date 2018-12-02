@@ -2,9 +2,12 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Region;
+use App\Entity\Commune;
 use App\Entity\Mosquee;
 use App\Form\MosqueeType;
-use App\Entity\Commune;
+use App\Form\MosqueeSearchType;
+use App\Entity\Search\MosqueeSearch;
 use App\Repository\MosqueeRepository;
 use App\Repository\CommuneRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,14 +28,18 @@ class AdminMosqueeController extends AbstractController
   public function index(Request $request, PaginatorInterface $paginator): Response
   {
     $em = $this->getDoctrine()->getManager();
+    $search = new MosqueeSearch();
+    $form = $this->createForm(MosqueeSearchType::class, $search);
+    $form->handleRequest($request);
     $repoMosquee = $em->getRepository(Mosquee::class);
     $mosquees = $paginator->paginate(
-      $repoMosquee->myFindAllQuery(),
+      $repoMosquee->myFindAllQuery($search),
       $request->query->getInt('page', 1),
       12
     );
     return $this->render('Admin/Mosquee/index.html.twig', [
-      'mosquees' => $mosquees
+      'mosquees' => $mosquees,
+      'form'     => $form->createView()
     ]);
   }
 

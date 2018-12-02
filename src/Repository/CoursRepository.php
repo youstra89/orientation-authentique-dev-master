@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Cours;
+use App\Entity\Search\CoursSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -23,13 +24,41 @@ class CoursRepository extends ServiceEntityRepository
 //     * @return Cours[] Returns an array of Cours objects
 //     */
 
-    public function myFindAllQuery()
-    {
-        return $this->createQueryBuilder('c')
-            ->orderBy('c.id', 'ASC')
-            ->getQuery()
-        ;
+public function myFindAllQuery(CoursSearch $search)
+{
+    $query = $this->createQueryBuilder('c')
+        ->orderBy('c.id', 'ASC');
+
+    if($search->getHds()){
+      $query = $query
+        ->join('c.hds', 'h')
+        ->addSelect('h')
+        ->andWhere('h.nom LIKE :nom  OR h.pnom LIKE :nom')
+        ->setParameter('nom', '%'.$search->getHds().'%');
     }
+
+    if($search->getDiscipline()){
+      $query = $query
+        ->andWhere('c.discipline = :discipline')
+        ->setParameter('discipline', $search->getDiscipline()->getId());
+    }
+
+    if($search->getCommune()){
+      $query = $query
+        ->join('c.mosquee', 'm')
+        ->addSelect('m')
+        ->andWhere('m.commune = :commune')
+        ->setParameter('commune', $search->getCommune()->getId());
+    }
+
+    if($search->getMosquee()){
+      $query = $query
+        ->andWhere('c.mosquee = :mosquee')
+        ->setParameter('mosquee', $search->getMosquee()->getId());
+    }
+
+    return $query->getQuery();
+}
 
 
     /*

@@ -53,6 +53,24 @@
 
 
 {% block content %}
+  <div class="uk-container">
+    {{ form_start(form) }}
+    <div class="uk-grid">
+      <div class="uk-width-1-4@s">
+        {{ form_row(form.nom, { 'attr': {'class': 'uk-input'} }) }}
+      </div>
+      <div class="uk-width-1-4@s">
+        {{ form_row(form.commune, { 'attr': {'class': 'uk-select'} }) }}
+      </div>
+      <div class="uk-width-1-4@s">
+        {{ form_row(form.region, { 'attr': {'class': 'uk-select'} }) }}
+      </div>
+      <div class="uk-width-1-4@s">
+        <button class="uk-button uk-button-primary" type="submit" name="button">Rechercher</button>
+      </div>
+    </div>
+    {{ form_end(form) }}
+  </div>
   <h2>Hommes de science enregistrés</h2>
   <div class="uk-hidden@s">
     <p uk-margin>

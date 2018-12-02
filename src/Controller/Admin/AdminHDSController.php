@@ -3,7 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\HDS;
+use App\Entity\Search\HDSSearch;
 use App\Form\HDSType;
+use App\Form\HDSSearchType;
 use App\Entity\Commune;
 use App\Repository\HDSRepository;
 use App\Repository\CommuneRepository;
@@ -26,14 +28,18 @@ class AdminHDSController extends AbstractController
   public function index(Request $request, PaginatorInterface $paginator): Response
   {
     $em = $this->getDoctrine()->getManager();
+    $search = new HDSSearch();
+    $form = $this->createForm(HDSSearchType::class, $search);
+    $form->handleRequest($request);
     $repoHDS = $em->getRepository(HDS::class);
     $hommes = $paginator->paginate(
-      $repoHDS->myFindAllQuery(),
+      $repoHDS->myFindAllQuery($search),
       $request->query->getInt('page', 1),
       12
     );
     return $this->render('Admin/HDS/index.html.twig', [
-      'hommes' => $hommes
+      'hommes' => $hommes,
+      'form'   => $form->createView()
     ]);
   }
 

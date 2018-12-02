@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Mosquee;
+use App\Entity\Search\MosqueeSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -22,12 +23,36 @@ class MosqueeRepository extends ServiceEntityRepository
 //    /**
 //     * @return Mosquee[] Returns an array of Mosquee objects
 //     */
-    public function myFindAllQuery()
+    public function myFindAllQuery(MosqueeSearch $search)
     {
-        return $this->createQueryBuilder('m')
-            ->orderBy('m.nom', 'ASC')
-            ->getQuery()
-        ;
+        $query = $this->createQueryBuilder('m')
+            ->orderBy('m.nom', 'ASC');
+
+        if($search->getNom()){
+          $query = $query
+            ->andWhere('m.nom LIKE :nom')
+            ->setParameter('nom', '%'.$search->getNom().'%');
+        }
+
+        if($search->getCommune()){
+          $query = $query
+            ->andWhere('m.commune = :commune')
+            ->setParameter('commune', $search->getCommune()->getId());
+        }
+
+        if($search->getRegion()){
+          $query = $query
+            ->join('m.commune', 'c')
+            ->addSelect('c')
+            ->join('c.ville', 'v')
+            ->addSelect('v')
+            ->join('v.region', 'r')
+            ->addSelect('r')
+            ->andWhere('v.region = :region')
+            ->setParameter('region', $search->getRegion()->getId());
+        }
+
+        return $query->getQuery();
     }
 
     /*

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Ecole;
+use App\Entity\Search\EcoleSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -22,13 +23,37 @@ class EcoleRepository extends ServiceEntityRepository
 //    /**
 //     * @return Ecole[] Returns an array of Ecole objects
 //     */
-    public function myFindAllQuery()
-    {
-        return $this->createQueryBuilder('e')
-            ->orderBy('e.nom', 'ASC')
-            ->getQuery()
-        ;
+public function myFindAllQuery(EcoleSearch $search)
+{
+    $query = $this->createQueryBuilder('e')
+        ->orderBy('e.nom', 'ASC');
+
+    if($search->getNom()){
+      $query = $query
+        ->andWhere('e.nom LIKE :nom')
+        ->setParameter('nom', '%'.$search->getNom().'%');
     }
+
+    if($search->getCommune()){
+      $query = $query
+        ->andWhere('e.commune = :commune')
+        ->setParameter('commune', $search->getCommune()->getId());
+    }
+
+    if($search->getRegion()){
+      $query = $query
+        ->join('e.commune', 'c')
+        ->addSelect('c')
+        ->join('c.ville', 'v')
+        ->addSelect('v')
+        ->join('v.region', 'r')
+        ->addSelect('r')
+        ->andWhere('v.region = :region')
+        ->setParameter('region', $search->getRegion()->getId());
+    }
+
+    return $query->getQuery();
+}
 
     /*
     public function findOneBySomeField($value): ?Ecole
