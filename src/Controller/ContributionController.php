@@ -7,13 +7,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class MainController extends AbstractController
+class ContributionController extends AbstractController
 {
   /**
-   * @Route("/", name="homepage")
+   * @Route("/contribuer-a-orientation-authentique", name="contribution")
    */
     public function index()
     {
-        return $this->render('base.html.twig');
+        return $this->render('Contribution/index.html.twig');
     }
 }

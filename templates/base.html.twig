@@ -2,7 +2,7 @@
 <html>
     <head>
       <meta charset="UTF-8">
-      <title>{% block title %}Orientation Authentique{% endblock %}</title>
+      <title>{% block title 'Orientation Authentique' %}</title>
       <link rel="stylesheet" href="{{ asset('/css/uikit.min.css') }}">
       {% block stylesheets %}
       {% endblock %}
@@ -49,10 +49,10 @@
               <div class="uk-navbar-flip">
                 <ul class="uk-navbar-nav uk-visible@s">
                   <li class="uk-active"><a href="{{ path('homepage') }}">Accueil</a></li>
-                  <li><a href="{{ path('homepage') }}">A propos</a></li>
-                  <li><a href="{{ path('homepage') }}">Orientations</a></li>
-                  <li><a href="{{ path('homepage') }}">Contribution</a></li>
-                  <li><a href="{{ path('homepage') }}">Contact</a></li>
+                  <li><a href="{{ path('about') }}">A propos</a></li>
+                  <li><a href="{{ path('orientation') }}">Orientations</a></li>
+                  <li><a href="{{ path('contribution') }}">Contribution</a></li>
+                  <li><a href="{{ path('contact') }}">Contact</a></li>
                   <li><a class="uk-navbar-toggle" uk-search-icon uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a></li>
                 </ul>
                 <ul class="uk-navbar-nav uk-hidden@s">
@@ -93,24 +93,24 @@
                 </li>
                 <ul uk-accordion="collapsible: true">
                     <li><a class="" href="{{ path('homepage') }}"><h4>Accueil</h4></a></li>
-                    <li><a class="" href="{{ path('homepage') }}"><h4>A Propos</h4></a></li>
+                    <li><a class="" href="{{ path('about') }}"><h4>A Propos</h4></a></li>
                 </ul>
                 <ul uk-accordion="collapsible: true">
                     <li>
-                        <a class="uk-accordion-title">Orientations</a>
+                        <a href="orientation" class="uk-accordion-title">Orientations</a>
                         <div class="uk-accordion-content">
                           <ul class="uk-list uk-list-divider">
-                            <li><a href="{{ path('homepage') }}">Cours</a></li>
-                            <li><a href="{{ path('homepage') }}">Mosquées</a></li>
-                            <li><a href="{{ path('homepage') }}">Ecoles</a></li>
-                            <li><a href="{{ path('homepage') }}">Hommes de science</a></li>
+                            <li><a href="{{ path('courses') }}">Cours</a></li>
+                            <li><a href="{{ path('mosquees') }}">Mosquées</a></li>
+                            <li><a href="{{ path('ecoles') }}">Ecoles</a></li>
+                            <li><a href="{{ path('hds') }}">Hommes de science</a></li>
                           </ul>
                         </div>
                     </li>
                 </ul>
                 <ul uk-accordion="collapsible: true" class="uk-margin">
-                  <li><a class="" href="{{ path('homepage') }}"><h4>Contribution</h4></a></li>
-                  <li><a class="" href="{{ path('homepage') }}"><h4>Contact</h4></a></li>
+                  <li><a class="" href="{{ path('contribution') }}"><h4>Contribution</h4></a></li>
+                  <li><a class="" href="{{ path('contact') }}"><h4>Contact</h4></a></li>
                 </ul>
               </ul>
             </div>
@@ -132,15 +132,6 @@
       </div>
 
       {% block body %}
-        <!-- <div uk-parallax="bgy: -200">
-          <div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light"
-          data-src="/img/fahrul-azmi.jpg"
-          data-srcset="/img/fahrul-azmi.jpg 650w,
-          /img/fahrul-azmi.jpg 1300w"
-          data-sizes="(min-width: 650px) 650px, 100vw" uk-img>
-            <h1>Orientation Authentique</h1>
-          </div>
-        </div> -->
         <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200" style="background-image: url('/img/fahrul-azmi.jpg');">
           <h1 class="uk-width-1-2@m uk-text-right uk-heading-primary uk-margin-auto uk-margin-auto-vertical">Orientation Authentique</h1>
         </div>
@@ -179,21 +170,7 @@
           <p class="uk-text-center">A travers ces quelques lignes, apprenez d'avantage sur le projet Orientation Authentique</p>
         </div>
       {% endblock %}
-      <!-- <div class="uk-background-primary uk-light uk-padding uk-panel">
-          <div class="uk-container uk-padding-small">
-            <div class="" uk-grid>
-                <div class="uk-width-1-3">
-                  <span>Menu</span>
-                </div>
-                <div class="uk-width-1-3">
-                  <span>Contact</span>
-                </div>
-                <div class="uk-width-1-3">
-                  <span>Liens utiles</span>
-                </div>
-            </div>
-          </div>
-      </div> -->
+
       <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
       <script src="{{ asset('js/uikit.min.js') }}"></script>
       <script src="{{ asset('js/uikit-icons.min.js') }}"></script>
