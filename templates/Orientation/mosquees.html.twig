@@ -1,0 +1,145 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'base.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Recherche de mosquées | Orientation Authentique' %}
+
+{% block big_title 'Mosquées' %}
+
+
+{% block notification %}
+  {% for message in app.flashes('success') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+  {% for message in app.flashes('error') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-danger" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+
+
+{% block contextual_menu %}
+{% endblock %}
+
+
+
+{% block body %}
+<div class="uk-container uk-padding-small">
+  <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Recherche de mosquée</span></h1>
+  <hr class="uk-divider-icon"><br>
+</div>
+{% endblock %}
+
+{% block content %}
+  <div class="uk-container">
+    {{ form_start(form) }}
+    <div class="uk-grid">
+      <div class="uk-width-1-4@s">
+        {{ form_row(form.nom, { 'attr': {'class': 'uk-input'} }) }}
+      </div>
+      <div class="uk-width-1-4@s">
+        {{ form_row(form.commune, { 'attr': {'class': 'uk-select'} }) }}
+      </div>
+      <div class="uk-width-1-4@s">
+        {{ form_row(form.region, { 'attr': {'class': 'uk-select'} }) }}
+      </div>
+      <div class="uk-width-1-4@s">
+        <button class="uk-button uk-button-primary" type="submit" name="button">Rechercher</button>
+      </div>
+    </div>
+    {{ form_end(form) }}
+  </div>
+  <h2>Mosquées enregistrées</h2>
+  <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
+      {% for mosquee in mosquees %}
+      <div>
+        <div class="uk-card uk-card-default uk-card-small uk-card-body">
+          <div class="uk-width-auto">
+            <img class="uk-border-circle" width="40" height="40" src="/img/fahrul-azmi.jpg">
+          </div>
+          <div class="uk-card-badge uk-label"uk-tooltip="title: Année de construction de la mosquée; pos: top">{{ mosquee.anneeConstruction }}</div>
+          <h3 class="uk-card-title uk-margin-remove-bottom">{{ mosquee.nom }} </h3>
+          <p class="uk-text-meta uk-margin-remove-top">{{ mosquee.quartier ~ ', '~ mosquee.commune.nom }}</p>
+          <p></p>
+          <br>
+          <a href="{{ path('mosquee.info', {id: mosquee.id}) }}" class="uk-button uk-button-text">Plus d'infos</a>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+  <div class="uk-pagination uk-flex-center"><br>
+    {{ knp_pagination_render(mosquees) }}
+  </div>
+{% endblock %}
+
+
+{% block javascripts %}
+  <script>
+    $(document).ready(function(){
+      // // Lorsque l'utilisateur clique sur le bouton de soumission, on vérifie le contenu
+      // //des champs nom et numéro. Ils ne doivent pas être vides
+      // $('.uk-button.uk-button-primary').on('click', function(){
+      //   if(typeof $('#mosquee_nom_imam').value === null or typeof $('#mosquee_nom_imam').value === 'undefined'){
+      //     alert('Le nom de l\'imam et/ou sont contact n\'ont pas été saisis');
+      //     return false;
+      //   }
+      //   else if(typeof $('#mosquee_numero_imam').value === 'undefined' or typeof $('#mosquee_numero_imam').value === null){
+      //     alert('Le nom de l\'imam et/ou sont contact n\'ont pas été saisis');
+      //     return false;
+      //   }
+      // });
+
+
+      // Ce code s'exécute à chaque changement du champ imam pour remplir automatiquement
+      // les champs nom et numéro
+      $('#mosquee_imam').on('change', function(){
+        $('#mosquee_nom_imam').val('');
+        $('#mosquee_numero_imam').val('');
+        var id = this.value;
+        $.ajax({
+            url: "{{ path('select.hds') }}",
+            type: 'GET',
+            data: 'hds=' + id,
+            dataType: 'json',
+            success: function (result) {
+              $('#mosquee_nom_imam').val(result.name);
+              $('#mosquee_numero_imam').val(result.number);
+              console.log('ça marche');
+            },
+            error: function (xhr, status, error) {
+              console.log(error)
+            }
+          });
+
+          // On doit faire des controles sur les champs nom et numero d'Imam
+          /*En effet, lorsque l'on sélectionne un hds comme imam d'une mosquée, il ne doit plus être possible
+           *de modifier ces deux champs (nom et numéron). Il faut donc les grisés.
+           */
+          if(this.value == '')
+          {
+            $('#mosquee_nom_imam').prop('disabled', false);
+            $('#mosquee_numero_imam').prop('disabled', false);
+          }
+          else{
+            $('#mosquee_nom_imam').prop('disabled', true);
+            $('#mosquee_numero_imam').prop('disabled', true);
+          }
+        });
+      });
+
+  </script>
+{% endblock %}

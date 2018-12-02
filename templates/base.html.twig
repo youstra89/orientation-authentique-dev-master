@@ -53,6 +53,7 @@
                   <li><a href="{{ path('orientation') }}">Orientations</a></li>
                   <li><a href="{{ path('contribution') }}">Contribution</a></li>
                   <li><a href="{{ path('contact') }}">Contact</a></li>
+                  <li><a href="{{ path('contact') }}">Se connecter</a></li>
                   <li><a class="uk-navbar-toggle" uk-search-icon uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a></li>
                 </ul>
                 <ul class="uk-navbar-nav uk-hidden@s">
@@ -100,10 +101,11 @@
                         <a href="orientation" class="uk-accordion-title">Orientations</a>
                         <div class="uk-accordion-content">
                           <ul class="uk-list uk-list-divider">
-                            <li><a href="{{ path('courses') }}">Cours</a></li>
-                            <li><a href="{{ path('mosquees') }}">Mosquées</a></li>
-                            <li><a href="{{ path('ecoles') }}">Ecoles</a></li>
-                            <li><a href="{{ path('hds') }}">Hommes de science</a></li>
+                            <li><a href="{{ path('orientation') }}">Astuces</a></li>
+                            <li><a href="{{ path('orientation.cours') }}">Cours</a></li>
+                            <li><a href="{{ path('orientation.mosquees') }}">Mosquées</a></li>
+                            <li><a href="{{ path('orientation.ecoles') }}">Ecoles</a></li>
+                            <li><a href="{{ path('orientation.hds') }}">Hommes de science</a></li>
                           </ul>
                         </div>
                     </li>
@@ -111,6 +113,7 @@
                 <ul uk-accordion="collapsible: true" class="uk-margin">
                   <li><a class="" href="{{ path('contribution') }}"><h4>Contribution</h4></a></li>
                   <li><a class="" href="{{ path('contact') }}"><h4>Contact</h4></a></li>
+                  <li><a class="" href="{{ path('contact') }}"><h4>Se connecter</h4></a></li>
                 </ul>
               </ul>
             </div>
@@ -120,56 +123,60 @@
         {% endblock %}
       </header>
 
-      <div class="uk-grid-small uk-child-width-expand@s uk-text-center" uk-grid>
-        <div class="uk-width-1-4@m uk-visible@s">
-          {% block contextual_menu %}
-          {% endblock %}
+      {% block notification %}{% endblock %}
+
+      {% block body %}
+      <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200" style="background-image: url('/img/fahrul-azmi.jpg');">
+        <h1 class="uk-width-1-2@m uk-text-right uk-heading-primary uk-margin-auto uk-margin-auto-vertical">Orientation Authentique</h1>
+      </div>
+      <div class="uk-container uk-padding-small">
+        <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Suivez une bonne orientation</span></h1>
+        <p class="uk-text-center">Un concentré de contenu permettant de mieux s'orienter partout en Côte d'Ivoire</p>
+        <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
+          <div>
+            <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">
+              <h2 class="uk-card-title">Cours</h2>
+              <p>Suivez les cours des hommes de science d'ici.</p>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">
+              <h2 class="uk-card-title">Mosquées</h2>
+              <p>Retrouvez très rapidement une mosquée dont les pratiques sont conformes à ceux des pieux prédécesseurs.</p>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">
+              <h2 class="uk-card-title">Ecoles</h2>
+              <p>Si vous cherchez une école pour suivre une formation islamique et authentique</p>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">
+              <h2 class="uk-card-title">Hommes de sciences en Côte d'Ivoire</h2>
+              <p>Qui sont ces hommes qui sont les models à suivre ?</p>
+            </div>
+          </div>
         </div>
-        <div class="uk-width-expand@m">
-          {% block content %}
-          {% endblock %}
+        <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Dernières publications</span></h1>
+        <p class="uk-text-center">Les dernières informations partagées par le projet</p>
+        <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Orientation authentique ?</span></h1>
+        <p class="uk-text-center">A travers ces quelques lignes, apprenez d'avantage sur le projet Orientation Authentique</p>
+      </div>
+      {% endblock %}
+      <div class="uk-container uk-padding-small">
+        <div class="uk-grid-small uk-grid-divider uk-child-width-expand@s" uk-grid>
+          <div class="uk-width-1-4@m uk-visible@s">
+            {% block contextual_menu %}
+            {% endblock %}
+          </div>
+          <div class="uk-width-expand@m uk-padding-small uk-padding-remove-top uk-padding-remove-right">
+            {% block content %}
+            {% endblock %}
+          </div>
         </div>
       </div>
 
-      {% block body %}
-        <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200" style="background-image: url('/img/fahrul-azmi.jpg');">
-          <h1 class="uk-width-1-2@m uk-text-right uk-heading-primary uk-margin-auto uk-margin-auto-vertical">Orientation Authentique</h1>
-        </div>
-        <div class="uk-container uk-padding-small">
-          <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Suivez une bonne orientation</span></h1>
-          <p class="uk-text-center">Un concentré de contenu permettant de mieux s'orienter partout en Côte d'Ivoire</p>
-          <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
-              <div>
-                  <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">
-                      <h2 class="uk-card-title">Cours</h2>
-                      <p>Suivez les cours des hommes de science d'ici.</p>
-                  </div>
-              </div>
-              <div>
-                  <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">
-                      <h2 class="uk-card-title">Mosquées</h2>
-                      <p>Retrouvez très rapidement une mosquée dont les pratiques sont conformes à ceux des pieux prédécesseurs.</p>
-                  </div>
-              </div>
-              <div>
-                  <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">
-                      <h2 class="uk-card-title">Ecoles</h2>
-                      <p>Si vous cherchez une école pour suivre une formation islamique et authentique</p>
-                  </div>
-              </div>
-              <div>
-                  <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-text-center">
-                      <h2 class="uk-card-title">Hommes de sciences en Côte d'Ivoire</h2>
-                      <p>Qui sont ces hommes qui sont les models à suivre ?</p>
-                  </div>
-              </div>
-          </div>
-          <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Dernières publications</span></h1>
-          <p class="uk-text-center">Les dernières informations partagées par le projet</p>
-          <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Orientation authentique ?</span></h1>
-          <p class="uk-text-center">A travers ces quelques lignes, apprenez d'avantage sur le projet Orientation Authentique</p>
-        </div>
-      {% endblock %}
 
       <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
       <script src="{{ asset('js/uikit.min.js') }}"></script>

@@ -31,7 +31,7 @@ class MosqueeRepository extends ServiceEntityRepository
         if($search->getNom()){
           $query = $query
             ->andWhere('m.nom LIKE :nom')
-            ->setParameter('nom', '%'.$search->getNom().'%');
+            ->setParameter('nom', '%'.addcslashes($search->getNom(), '%_').'%');
         }
 
         if($search->getCommune()){

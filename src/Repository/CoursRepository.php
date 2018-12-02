@@ -34,7 +34,7 @@ public function myFindAllQuery(CoursSearch $search)
         ->join('c.hds', 'h')
         ->addSelect('h')
         ->andWhere('h.nom LIKE :nom  OR h.pnom LIKE :nom')
-        ->setParameter('nom', '%'.$search->getHds().'%');
+        ->setParameter('nom', '%'.addcslashes($search->getNom(), '%_').'%');
     }
 
     if($search->getDiscipline()){

@@ -1,0 +1,104 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'base.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Recherche de cours | Orientation Authentique' %}
+
+
+{% block notification %}
+  {% for message in app.flashes('success') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+  {% for message in app.flashes('error') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-danger" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+
+
+{% block body %}
+  <div class="uk-container uk-padding-small">
+    <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Recherche de cours</span></h1>
+    <hr class="uk-divider-icon"><br>
+  </div>
+{% endblock %}
+
+
+
+{% block contextual_menu %}
+{% endblock %}
+
+
+{% block content %}
+  <div class="uk-container">
+    {{ form_start(form) }}
+    <div class="uk-grid">
+      <div class="uk-width-1-5@s">
+        {{ form_row(form.hds, { 'attr': {'class': 'uk-input'} }) }}
+      </div>
+      <div class="uk-width-1-5@s">
+        {{ form_row(form.discipline, { 'attr': {'class': 'uk-input'} }) }}
+      </div>
+      <div class="uk-width-1-5@s">
+        {{ form_row(form.mosquee, { 'attr': {'class': 'uk-select'} }) }}
+      </div>
+      <div class="uk-width-1-5@s">
+        {{ form_row(form.commune, { 'attr': {'class': 'uk-select'} }) }}
+      </div>
+      <div class="uk-width-1-5@s">
+        <button class="uk-button uk-button-primary" type="submit" name="button">Rechercher</button>
+      </div>
+    </div>
+    {{ form_end(form) }}
+  </div>
+  <h2>Cours enrégistrées</h2>
+  <table class="uk-table uk-table-small uk-table-divider">
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Discipline</th>
+        <th>HDS</th>
+        <th>Mosquée</th>
+        <th>Jour/Heure</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set i = 0 %}
+      {% for cours in courses %}
+        {% set i = i + 1 %}
+        <tr>
+          <td>{{ i }}</td>
+          <td>{{ cours.discipline.nom }}</td>
+          <td>{{ cours.hds.pnom }} {{ cours.hds.nom }}</td>
+          <td>{{ cours.mosquee.nom }}</td>
+          <td>{{ cours.getJourCoursType }}, {{ cours.getHeureCoursType }}</td>
+          <td>
+            <a href="{{ path('cours.details', {id: cours.id}) }}" uk-icon="icon: file-text" uk-tooltip="title: Voir plus de détails; pos: top"></a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="uk-pagination uk-flex-center">
+    {{ knp_pagination_render(courses) }}
+  </div>
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

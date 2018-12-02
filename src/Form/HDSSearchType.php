@@ -25,15 +25,6 @@ class HDSSearchType extends AbstractType
                 'placeholder' => 'Entrez un nom ou un prénom'
               ]
             ])
-            ->add('discipline', EntityType::class, [
-              'required' => false,
-              'class'    => Discipline::class,
-              'choice_label' => 'nom',
-              'label'    => false,
-              'required' => false,
-              'multiple' => false,
-              'placeholder' => 'Sélectionnez une discipline'
-            ])
             ->add('commune', EntityType::class, [
               'required' => false,
               'class'    => Commune::class,

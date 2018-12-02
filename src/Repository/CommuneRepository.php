@@ -32,7 +32,7 @@ class CommuneRepository extends ServiceEntityRepository
         if($search->getNom()){
           $query = $query
             ->andWhere('c.nom LIKE :nom')
-            ->setParameter('nom', '%'.$search->getNom().'%');
+            ->setParameter('%'.addcslashes($search->getNom(), '%_').'%');
         }
 
         if($search->getRegion()){

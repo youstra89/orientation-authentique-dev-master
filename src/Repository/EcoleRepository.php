@@ -31,7 +31,7 @@ public function myFindAllQuery(EcoleSearch $search)
     if($search->getNom()){
       $query = $query
         ->andWhere('e.nom LIKE :nom')
-        ->setParameter('nom', '%'.$search->getNom().'%');
+        ->setParameter('nom', '%'.addcslashes($search->getNom(), '%_').'%');
     }
 
     if($search->getCommune()){

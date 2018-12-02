@@ -1,0 +1,91 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'base.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Recherche d\'écoles | Orientation Authentique' %}
+
+
+
+{% block notification %}
+  {% for message in app.flashes('success') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+  {% for message in app.flashes('error') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-danger" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+
+{% block body %}
+  <div class="uk-container uk-padding-small">
+    <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Recherche d'écoles</span></h1>
+    <hr class="uk-divider-icon"><br>
+  </div>
+{% endblock %}
+
+
+{% block contextual_menu %}
+{% endblock %}
+
+
+
+{% block content %}
+  <div class="uk-container">
+    {{ form_start(form) }}
+    <div class="uk-grid">
+      <div class="uk-width-1-4@s">
+        {{ form_row(form.nom, { 'attr': {'class': 'uk-input'} }) }}
+      </div>
+      <div class="uk-width-1-4@s">
+        {{ form_row(form.commune, { 'attr': {'class': 'uk-select'} }) }}
+      </div>
+      <div class="uk-width-1-4@s">
+        {{ form_row(form.region, { 'attr': {'class': 'uk-select'} }) }}
+      </div>
+      <div class="uk-width-1-4@s">
+        <button class="uk-button uk-button-primary" type="submit" name="button">Rechercher</button>
+      </div>
+    </div>
+    {{ form_end(form) }}
+  </div>
+  <h2>Ecoles enregistrées</h2>
+  <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
+    {% for ecole in ecoles %}
+      <div>
+        <div class="uk-card uk-card-primary uk-card-body">
+            <div class="uk-width-auto">
+              <img class="uk-border-circle" width="40" height="40" src="/img/fahrul-azmi.jpg">
+            </div>
+            <div class="uk-card-badge uk-label"uk-tooltip="title: Année de construction de l'école; pos: top">{{ ecole.anneeConstruction }}</div>
+            <h3 class="uk-card-title uk-margin-remove-bottom">{{ ecole.nom }} </h3>
+            <p class="uk-text-meta uk-margin-remove-top">{{ ecole.quartier ~ ', '~ ecole.commune.nom }}</p>
+            <p></p>
+            <br>
+            <a href="{{ path('ecole.info', {id: ecole.id}) }}" class="uk-button uk-button-text">Plus d'infos</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <br>
+  <div class="uk-pagination uk-flex-center">
+    {{ knp_pagination_render(ecoles) }}
+  </div>
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

@@ -31,7 +31,7 @@ class HDSRepository extends ServiceEntityRepository
         if($search->getNom()){
           $query = $query
             ->andWhere('h.nom LIKE :nom OR h.pnom LIKE :nom')
-            ->setParameter('nom', '%'.$search->getNom().'%');
+            ->setParameter('nom', '%'.addcslashes($search->getNom(), '%_').'%');
         }
 
         if($search->getCommune()){

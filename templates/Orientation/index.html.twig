@@ -21,8 +21,75 @@
 {% block body %}
   <div class="uk-container uk-padding-small">
     <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Différentes orientations</span></h1>
-    <p class="uk-text-center">Comment trouver les mosquées, les hommes de science, les écoles, les cours...</p>
+    <p class="uk-text-center">Vous avez la possibilité de retrouver des mosquées, des hommes de science, des écoles mais des cours
+    des cours qui sont dispensés dans des mosquées par de hommes appelant à la religion vraie.</p>
   </div>
+  <div class="uk-section uk-section-primary">
+      <div class="uk-container">
+
+        <h2>Comment faire les recherches ?</h2>
+
+        <div class="uk-grid-match uk-child-width-1-3@m" uk-grid>
+            <div>
+                <p>Al hamdoulillah, les recherches sont très simples à effectuer. Il vous suffit d'indiquer
+                  des critères de recherche dans des champ réservés à cet effet.</p>
+            </div>
+            <div>
+                <p>Pour chaque objet de recherche, vous avez un filtre qui permet de spécifier des critères de
+                recherches: par <strong>nom</strong>  ou <strong>prénom</strong> pour les hommes de science,
+                par <strong>nom</strong> pour les mosquées et les écoles.
+              </p>
+            </div>
+            <div>
+                <p>Vous pouvez aussi rechercher des cours dans des mosquées. Il est également possible de faire
+                  des recherches selon les localités; par la commune par exemple ou encore par la region</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<br>
+<div class="uk-container">
+  <div class="uk-child-width-1-2@s" uk-grid>
+    <div>
+      <div class="uk-dark uk-background-muted uk-padding">
+        <h3>Mosquées</h3>
+        <p>Rechercher ici toutes mosquées dont les pratiques sont conformes à ceux des pieux prédécésseurs.</p>
+        <a href="{{ path('orientation.mosquees') }}" class="uk-button uk-button-default">Accéder au contenu</a>
+      </div>
+    </div>
+    <div>
+      <div class="uk-dark uk-background-muted uk-padding">
+        <h3>Hommes de science</h3>
+        <p>Qui devons-nous suivre en ces périodes de troubles ? Bien sûr, ce sont ceux qui prêche selon de
+          Qur'an et les hadith. Retrouvez-les ici</p>
+        <a href="{{ path('orientation.hds') }}" class="uk-button uk-button-default">Accéder au contenu</a>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="uk-divider-icon"><br>
+<div class="uk-container">
+  <div class="uk-child-width-1-2@s" uk-grid>
+    <div>
+      <div class="uk-dark uk-background-muted uk-padding">
+        <h3>Ecoles</h3>
+        <p>Si vous êtes en quête d'une école pour votre formation ou la formation de vos enfants, retrouvez
+        les écoles qui enseignent la sunna dans votre zone ici.</p>
+        <a href="{{ path('orientation.ecoles') }}" class="uk-button uk-button-default">Accéder au contenu</a>
+      </div>
+    </div>
+    <div>
+      <div class="uk-dark uk-background-muted uk-padding">
+        <h3>Cours</h3>
+        <p>Retrouvez rapidement ces hommes qui enseignent le Qur'an et les hadith, les
+          jours et heures de cours, les lieux aussi. Il est aussi possible,
+        de voir les livres étudié et même de les télécharger au format pdf.</p>
+        <a href="{{ path('orientation.cours') }}" class="uk-button uk-button-default">Accéder au contenu</a>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 
