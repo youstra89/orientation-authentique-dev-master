@@ -6,6 +6,11 @@ use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../vendor/autoload.php';
+// require __DIR__.'/../symfony/vendor/autoload.php';
+
+
+// $_SERVER['APP_ENV']='dev';
+// $_SERVER['DATABASE_URL']='mysql://2844069_blog:youstra89@fdb22.awardspace.net:3306/2844069_blog';
 
 // The check is to ensure we don't use .env in production
 if (!isset($_SERVER['APP_ENV']) && !isset($_ENV['APP_ENV'])) {

@@ -1,0 +1,3 @@
+parameters:
+    APP_ENV: "prod"
+    env(DATABASE_URL): "mysql://root:l@note20$@127.0.0.1:3306/orientation_authentique"

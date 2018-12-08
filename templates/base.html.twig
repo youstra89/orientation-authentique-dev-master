@@ -2,28 +2,30 @@
 <html>
     <head>
       <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>{% block title 'Orientation Authentique' %}</title>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.25/css/uikit.min.css" />
       {% block stylesheets %}
       {% endblock %}
-      <style media="screen">
+      <style>
         .uk-navbar-container.uk-light:not(.uk-navbar-transparent):not(.uk-navbar-primary) {
-          background: #222;
+          background: #FF6F00;
         }
 
-        #mobile-navbar .uk-offcanvas-bar {
-          box-shadow: 2px 0 5px 0 #0e0e0e;
+        #offcanvas-overlay .uk-offcanvas-bar {
+          box-shadow: 2px 0 5px 0 #FF6F00;
+          background: #FF6F00;
         }
-        #mobile-navbar li:nth-child(1),
-        #mobile-navbar li:nth-child(2),
-        #mobile-navbar li:nth-child(3) {
+        #offcanvas-overlay li:nth-child(1),
+        #offcanvas-overlay li:nth-child(2),
+        #offcanvas-overlay li:nth-child(3) {
           border-left: unset;
         }
-        #mobile-navbar li {
+        #offcanvas-overlay li {
           padding-left: 5px;
           border-left: 2px solid transparent;
         }
-        #mobile-navbar li.uk-active {
+        #offcanvas-overlay li.uk-active {
           padding-left: 5px;
           border-left: 2px solid #545454;
         }
@@ -58,7 +60,10 @@
                 </ul>
                 <ul class="uk-navbar-nav uk-hidden@s">
                   <li><a class="uk-navbar-toggle" uk-search-icon uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a></li>
-                  <li><a class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: #mobile-navbar"></a></li>
+                  <li>
+                    <!-- <a class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: #mobile-navbar"></a> -->
+                    <a class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: #offcanvas-overlay"></a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -76,49 +81,52 @@
           <!-- end menu position-->
           <!-- off-canvas menu-->
           <div id="mobile-navbar" uk-offcanvas="mode: slide; flip: false">
-            <div class="uk-offcanvas-bar">
-              <!-- off-canvas close button-->
-              <button class="uk-offcanvas-close" type="button" uk-close></button>
-              <!-- off-canvas close button-->
-              <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-                <!-- logo or title-->
-                <li class="uk-text-center" style="padding: 0 0 25px 0;"><a href="#">
-                    <!--h3 Site Name--><img src="http://blog.codepen.io/wp-content/uploads/2012/06/Button-Fill-White-Large.png" alt="logo" width="64"></a></li>
-                <!-- end logo or title-->
-                <!-- menu-->
-                <li>
-                  <hr>
-                </li>
-                <li class="uk-text-center">
-                  <h3>Menu</h3>
-                </li>
-                <ul uk-accordion="collapsible: true">
-                    <li><a class="" href="{{ path('homepage') }}"><h4>Accueil</h4></a></li>
-                    <li><a class="" href="{{ path('about') }}"><h4>A Propos</h4></a></li>
-                </ul>
-                <ul uk-accordion="collapsible: true">
-                    <li>
-                        <a href="orientation" class="uk-accordion-title">Orientations</a>
-                        <div class="uk-accordion-content">
-                          <ul class="uk-list uk-list-divider">
-                            <li><a href="{{ path('orientation') }}">Astuces</a></li>
-                            <li><a href="{{ path('orientation.cours') }}">Cours</a></li>
-                            <li><a href="{{ path('orientation.mosquees') }}">Mosquées</a></li>
-                            <li><a href="{{ path('orientation.ecoles') }}">Ecoles</a></li>
-                            <li><a href="{{ path('orientation.hds') }}">Hommes de science</a></li>
-                          </ul>
-                        </div>
-                    </li>
-                </ul>
-                <ul uk-accordion="collapsible: true" class="uk-margin">
-                  <li><a class="" href="{{ path('contribution') }}"><h4>Contribution</h4></a></li>
-                  <li><a class="" href="{{ path('contact') }}"><h4>Contact</h4></a></li>
-                  <li><a class="" href="{{ path('contact') }}"><h4>Se connecter</h4></a></li>
-                </ul>
-              </ul>
-            </div>
+
           </div>
           <!-- end off-canvas menu-->
+        </div>
+        <div id="offcanvas-overlay" uk-offcanvas="mode: slide; overlay: true">
+          <div class="uk-offcanvas-bar">
+            <!-- off-canvas close button-->
+            <button class="uk-offcanvas-close" type="button" uk-close></button>
+            <!-- off-canvas close button-->
+            <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
+              <!-- logo or title-->
+              <li class="uk-text-center" style="padding: 0 0 25px 0;"><a href="#">
+                  <!--h3 Site Name--><img src="http://blog.codepen.io/wp-content/uploads/2012/06/Button-Fill-White-Large.png" alt="logo" width="64"></a></li>
+              <!-- end logo or title-->
+              <!-- menu-->
+              <li>
+                <hr>
+              </li>
+              <li class="uk-text-center">
+                <h3>Menu</h3>
+              </li>
+              <ul uk-accordion="collapsible: true">
+                  <li><a class="" href="{{ path('homepage') }}"><h4>Accueil</h4></a></li>
+                  <li><a class="" href="{{ path('about') }}"><h4>A Propos</h4></a></li>
+              </ul>
+              <ul uk-accordion="collapsible: true">
+                  <li>
+                      <a href="orientation" class="uk-accordion-title">Orientations</a>
+                      <div class="uk-accordion-content">
+                        <ul class="uk-list uk-list-divider">
+                          <li><a href="{{ path('orientation') }}">Astuces</a></li>
+                          <li><a href="{{ path('orientation.cours') }}">Cours</a></li>
+                          <li><a href="{{ path('orientation.mosquees') }}">Mosquées</a></li>
+                          <li><a href="{{ path('orientation.ecoles') }}">Ecoles</a></li>
+                          <li><a href="{{ path('orientation.hds') }}">Hommes de science</a></li>
+                        </ul>
+                      </div>
+                  </li>
+              </ul>
+              <ul uk-accordion="collapsible: true" class="uk-margin">
+                <li><a class="" href="{{ path('contribution') }}"><h4>Contribution</h4></a></li>
+                <li><a class="" href="{{ path('contact') }}"><h4>Contact</h4></a></li>
+                <li><a class="" href="{{ path('contact') }}"><h4>Se connecter</h4></a></li>
+              </ul>
+            </ul>
+          </div>
         </div>
         {% endblock %}
       </header>
@@ -126,7 +134,7 @@
       {% block notification %}{% endblock %}
 
       {% block body %}
-      <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200" style="background-image: url('/img/fahrul-azmi.jpg');">
+      <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200" style="background-image: url('{{ asset('img/fahrul-azmi.jpg') }}');">
         <h1 class="uk-width-1-2@m uk-text-right uk-heading-primary uk-margin-auto uk-margin-auto-vertical">Orientation Authentique</h1>
       </div>
       <div class="uk-container uk-padding-small">

@@ -56,7 +56,7 @@ class AdminController extends AbstractController
     $mosquees    = $repoMosquee->myCount();
     $communes    = $repoCommune->myCount();
     $disciplines = $repoDiscipline->myCount();
-    dump($hommes);
+    // dump($hommes);
     return $this->render('Admin/index.html.twig', [
       'hommes'      => $hommes,
       'ecoles'      => $ecoles,
