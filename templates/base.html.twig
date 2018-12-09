@@ -55,7 +55,24 @@
                   <li><a href="{{ path('orientation') }}">Orientations</a></li>
                   <li><a href="{{ path('contribution') }}">Contribution</a></li>
                   <li><a href="{{ path('contact') }}">Contact</a></li>
-                  <li><a href="{{ path('contact') }}">Se connecter</a></li>
+                  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li><a class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: #compte"></a></li>
+                    <!-- Dropdown Structure -->
+                    <div id="compte" uk-offcanvas="mode: slide; overlay: true">
+                      <div class="uk-offcanvas-bar">
+                        <button class="uk-offcanvas-close" type="button" uk-close></button>
+                        <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
+                          {% if is_granted('ROLE_ADMIN') %}
+                          <li><a href="{{ path('admin') }}">Panel Admin</a></li>
+                          {% endif %}
+                          <li><a href="">Mon compte</a></li>
+                          <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  {% else %}
+                    <li><a href="{{ path('login')}}">Se connecter</a></li>
+                  {% endif %}
                   <li><a class="uk-navbar-toggle" uk-search-icon uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a></li>
                 </ul>
                 <ul class="uk-navbar-nav uk-hidden@s">
@@ -123,7 +140,24 @@
               <ul uk-accordion="collapsible: true" class="uk-margin">
                 <li><a class="" href="{{ path('contribution') }}"><h4>Contribution</h4></a></li>
                 <li><a class="" href="{{ path('contact') }}"><h4>Contact</h4></a></li>
-                <li><a class="" href="{{ path('contact') }}"><h4>Se connecter</h4></a></li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                  <ul uk-accordion="collapsible: true">
+                      <li>
+                          <a href="orientation" class="uk-accordion-title">{{ app.user.username }}</a>
+                          <div class="uk-accordion-content">
+                            <ul class="uk-list uk-list-divider">
+                              {% if is_granted('ROLE_ADMIN') %}
+                              <li><a href="{{ path('admin') }}">Panel Admin</a></li>
+                              {% endif %}
+                              <li><a href="">Mon compte</a></li>
+                              <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+                            </ul>
+                          </div>
+                      </li>
+                  </ul>
+                {% else %}
+                  <li><a class="" href="{{ path('login') }}"><h4>Se connecter</h4></a></li>
+                {% endif %}
               </ul>
             </ul>
           </div>

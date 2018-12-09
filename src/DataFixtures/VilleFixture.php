@@ -15,15 +15,15 @@ class VilleFixture extends Fixture
     {
         // $product = new Product();
         // $manager->persist($product);
-        $faker = Factory::create('fr_FR');
-        for($i = 0; $i < 116; $i++)
-        {
-          $ville = new Ville();
-          $ville->setNom($faker->city);
-          $r = $manager->getRepository(Region::class)->findAll();
-          $ville->setRegion($r[rand(38, 60)]);
-          $manager->persist($ville);
-        }
+        // $faker = Factory::create('fr_FR');
+        // for($i = 0; $i < 116; $i++)
+        // {
+        //   $ville = new Ville();
+        //   $ville->setNom($faker->city);
+        //   $r = $manager->getRepository(Region::class)->findAll();
+        //   $ville->setRegion($r[rand(38, 60)]);
+        //   $manager->persist($ville);
+        // }
 
         $manager->flush();
     }

@@ -15,15 +15,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/admin/localite")
+ * @Security("has_role('ROLE_EDITEUR')")
  */
 class AdminLocaliteController extends AbstractController
 {
   /**
    * @Route("/", name="localite", methods="GET")
+   * @Security("has_role('ROLE_EDITEUR')")
    */
   public function index(): Response
   {
@@ -32,6 +36,7 @@ class AdminLocaliteController extends AbstractController
 
   /**
    * @Route("/region", name="regions", methods="GET")
+   * @Security("has_role('ROLE_EDITEUR')")
    */
   public function regions(Request $request, PaginatorInterface $paginator): Response
   {
@@ -50,6 +55,7 @@ class AdminLocaliteController extends AbstractController
 
   /**
    * @Route("/region/add", name="region.add", methods="GET|POST")
+   * @Security("has_role('ROLE_EDITEUR')")
    */
   public function region_add(Request $request): Response
   {
@@ -72,6 +78,7 @@ class AdminLocaliteController extends AbstractController
 
   /**
    * @Route("/region/edit/{id<\d+>}", name="region.edit", methods="GET|POST")
+   * @Security("has_role('ROLE_EDITEUR')")
    * @param Region $region
    */
   public function region_edit(Region $region, Request $request): Response
@@ -96,6 +103,7 @@ class AdminLocaliteController extends AbstractController
 
     /**
      * @Route("/ville", name="villes", methods="GET")
+     * @Security("has_role('ROLE_EDITEUR')")
      */
     public function villes(Request $request, PaginatorInterface $paginator): Response
     {
@@ -114,6 +122,7 @@ class AdminLocaliteController extends AbstractController
 
     /**
      * @Route("/ville/add", name="ville.add", methods="GET|POST")
+     * @Security("has_role('ROLE_EDITEUR')")
      */
     public function ville_add(Request $request): Response
     {
@@ -137,6 +146,7 @@ class AdminLocaliteController extends AbstractController
 
     /**
      * @Route("/ville/edit/{id<\d+>}", name="ville.edit", methods="GET|POST")
+     * @Security("has_role('ROLE_EDITEUR')")
      * @param Ville $ville
      */
     public function ville_edit(Ville $ville, Request $request): Response
@@ -161,6 +171,7 @@ class AdminLocaliteController extends AbstractController
 
     /**
      * @Route("/commune", name="communes", methods="GET")
+     * @Security("has_role('ROLE_EDITEUR')")
      */
     public function communes(Request $request, PaginatorInterface $paginator): Response
     {
@@ -183,6 +194,7 @@ class AdminLocaliteController extends AbstractController
 
     /**
      * @Route("/commune/add/{villeId<\d+>}", name="commune.add", methods="GET|POST")
+     * @Security("has_role('ROLE_EDITEUR')")
      */
     public function commune_add(Request $request, int $villeId): Response
     {
@@ -210,6 +222,7 @@ class AdminLocaliteController extends AbstractController
 
     /**
      * @Route("/commune/edit/{id<\d+>}", name="commune.edit", methods="GET|POST")
+     * @Security("has_role('ROLE_EDITEUR')")
      * @param Commune $commune
      */
     public function commune_edit(Commune $commune, Request $request): Response
