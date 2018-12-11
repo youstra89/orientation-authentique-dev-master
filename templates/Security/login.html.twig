@@ -21,6 +21,14 @@
           </div>
         </div>
       {% endfor %}
+      {% for message in app.flashes('warning') %}
+        <div class="uk-container uk-padding-small">
+          <div class="uk-alert-warning" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p>{{ message }}</p>
+          </div>
+        </div>
+      {% endfor %}
       {% for message in app.flashes('error') %}
         <div class="uk-container uk-padding-small">
           <div class="uk-alert-danger" uk-alert>
@@ -52,7 +60,8 @@
         </form>
       </div>
     </div>
-    <br><br><br>
+    <br>
+    <p class="uk-heading-line uk-heading uk-text-center"><span>OU</span></p
     <div class="uk-margin-auto uk-margin-auto-vertical uk-width-1-2@s uk-margin-xlarge-top">
       <div class="uk-text-center">
         <a href="{{ path('registration') }}" class="uk-button uk-button-secondary">Créer votre compte</a>

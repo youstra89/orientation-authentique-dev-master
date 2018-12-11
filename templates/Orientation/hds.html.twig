@@ -32,20 +32,10 @@
 
 
 {% block body %}
-<div class="uk-container uk-padding-small">
-  <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Recherche d'HDS</span></h1>
-  <hr class="uk-divider-icon"><br>
-</div>
-{% endblock %}
-
-
-
-{% block contextual_menu %}
-{% endblock %}
-
-
-
-{% block content %}
+  <div class="uk-container uk-padding-small">
+    <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Recherche d'HDS</span></h1>
+    <hr class="uk-divider-icon"><br>
+  </div>
   <div class="uk-container">
     {{ form_start(form) }}
     <div class="uk-grid">
@@ -64,35 +54,38 @@
     </div>
     {{ form_end(form) }}
   </div>
-  <h2>Hommes de science enregistrés</h2>
-  <table class="uk-table uk-table-small uk-table-divider">
-    <thead>
-      <tr>
-        <th>N°</th>
-        <th>Nom</th>
-        <th>Spécialité</th>
-        <th>Commune</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% set i = 0 %}
-      {% for hds in hommes %}
-        {% set i = i + 1 %}
+  <br>
+  <div class="uk-container uk-margin-small">
+    <h2>Hommes de science enregistrés</h2>
+    <table class="uk-table uk-table-small uk-table-divider">
+      <thead>
         <tr>
-          <td>{{ i }}</td>
-          <td>{{ hds.nom }} {{ hds.pnom }}</td>
-          <td>{{ hds.specialite }}</td>
-          <td>{{ hds.commune.nom }}</td>
-          <td>
-            <a href="{{ path('hds.biographie', {id: hds.id}) }}" uk-icon="icon: file-text" uk-tooltip="title: Lire la biographie; pos: top"></a>
-          </td>
+          <th>N°</th>
+          <th>Nom</th>
+          <th>Spécialité</th>
+          <th>Commune</th>
+          <th>Actions</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <div class="uk-pagination uk-flex-center">
-    {{ knp_pagination_render(hommes) }}
+      </thead>
+      <tbody>
+        {% set i = 0 %}
+        {% for hds in hommes %}
+          {% set i = i + 1 %}
+          <tr>
+            <td>{{ i }}</td>
+            <td>{{ hds.nom }} {{ hds.pnom }}</td>
+            <td>{{ hds.specialite }}</td>
+            <td>{{ hds.commune.nom }}</td>
+            <td>
+              <a href="{{ path('orientation.hds.biographie', {id: hds.id}) }}" uk-icon="icon: file-text" uk-tooltip="title: Lire la biographie; pos: top"></a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="uk-pagination uk-flex-center">
+      {{ knp_pagination_render(hommes) }}
+    </div>
   </div>
 {% endblock %}
 

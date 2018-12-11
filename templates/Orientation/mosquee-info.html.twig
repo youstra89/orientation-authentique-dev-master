@@ -1,0 +1,97 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'base.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Informations sur mosquée | Orientation Authentique' %}
+
+{% block big_title 'Mosquées' %}
+
+
+
+{% block body %}
+  <div class="uk-container uk-padding-small">
+    <h1 class="uk-heading-line uk-heading-primary uk-text-center">
+      Mosquée <strong>{{ mosquee.nom }}</strong> à <strong>{{ mosquee.commune.nom }}</strong>
+    </h1>
+    <hr class="uk-divider-icon"><br>
+    <a href="javascript:history.back()"class="uk-button uk-button-default">Retour</A>
+    <div uk-grid>
+      <div class="uk-overflow-auto">
+        <table class="uk-table uk-table-small uk-table-divider" uk-grid>
+          <tbody>
+            <tr>
+              <td class="uk-width-large"><strong>Nom</strong></td>
+              <td class="uk-width-xxlarge uk-margin">{{ mosquee.nom }}</td>
+            </tr>
+            <tr>
+              <td><strong>Localisation</strong></td>
+              <td>{{ mosquee.quartier }}, {{ mosquee.commune.nom }}</td>
+            </tr>
+            <tr>
+              <td><strong>Imam</strong></td>
+              <td>
+                {% if mosquee.imam %}
+                  {{ mosquee.imam.pnom }} {{ mosquee.imam.nom }}, {{ mosquee.imam.numero }}
+                {% else %}
+                  {{ mosquee.nomImam }} {{ mosquee.numeroImam }}
+                {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Prière du vendredi</strong></td>
+              <td>
+                {% if mosquee.djoumoua == TRUE %}
+                  Oui
+                {% else %}
+                  Non
+                {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Construite en</strong></td>
+              <td>{{ mosquee.anneeConstruction }}</td>
+            </tr>
+            <tr>
+              <td><strong>Description</strong></td>
+              <td>{{ mosquee.description }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <br>
+    <h2>Les cours dispensés dans la mosquée</h2>
+    <div uk-grid>
+      <table class="uk-table uk-table-small uk-table-divider">
+      <thead>
+        <tr>
+          <th>N°</th>
+          <th>Discipline</th>
+          <th>HDS</th>
+          <th>Jour/Heure</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% set i = 0 %}
+        {% for cours in courses %}
+          {% set i = i + 1 %}
+          <tr>
+            <td>{{ i }}</td>
+            <td>{{ cours.discipline.nom }}</td>
+            <td>{{ cours.hds.pnom }} {{ cours.hds.nom }}</td>
+            <td>{{ cours.getJourCoursType }}, {{ cours.getHeureCoursType }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

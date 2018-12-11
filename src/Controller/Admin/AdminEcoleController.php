@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -23,6 +24,7 @@ class AdminEcoleController extends AbstractController
 {
   /**
    * @Route("/", name="ecoles", methods="GET")
+   * @Security("has_role('ROLE_ADMIN')")
    */
   public function index(Request $request, PaginatorInterface $paginator): Response
   {
@@ -44,6 +46,7 @@ class AdminEcoleController extends AbstractController
 
   /**
    * @Route("/add", name="ecole.add", methods="GET|POST")
+   * @Security("has_role('ROLE_EDITEUR')")
    */
   public function ecole_add(Request $request): Response
   {
@@ -71,6 +74,7 @@ class AdminEcoleController extends AbstractController
 
   /**
    * @Route("/edit/{id}", name="ecole.edit", methods="GET|POST", requirements={"id"="\d+"})
+   * @Security("has_role('ROLE_EDITEUR')")
    * @param Ecole $ecole
    */
   public function ecole_edit(Request $request, Ecole $ecole): Response
@@ -100,6 +104,7 @@ class AdminEcoleController extends AbstractController
 
   /**
    * @Route("/information/{id}", name="ecole.info", methods="GET", requirements={"id"="\d+"})
+   * @Security("has_role('ROLE_ADMIN')")
    * @param Ecole $ecole
    */
   public function ecole_information(Request $request, Ecole $ecole): Response

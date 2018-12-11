@@ -21,7 +21,41 @@
 
 
 
+{% block notification %}
+  {% for message in app.flashes('success') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+  {% for message in app.flashes('warning') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-warning" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+  {% for message in app.flashes('error') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-danger" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+
+
 {% block body %}
+<div class="uk-container">
+  {% if is_granted('ROLE_SUPER_ADMIN') %}
+    <a href="{{ path('mail') }}" class="uk-button uk-button-primary" type="button">Envoie le mail</a>
+  {% endif %}
+</div>
 <div class="uk-container">
   <table class="uk-table uk-table-middle uk-table-divider">
     <thead>

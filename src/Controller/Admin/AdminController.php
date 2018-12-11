@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\HDS;
+use App\Entity\User;
 use App\Entity\Ecole;
 use App\Entity\Cours;
 use App\Entity\Livre;
@@ -26,10 +27,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/admin")
- * @Security("has_role('ROLE_EDITEUR')")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class AdminController extends AbstractController
 {
@@ -70,5 +72,35 @@ class AdminController extends AbstractController
       'communes'    => $communes,
       'disciplines' => $disciplines,
     ]);
+  }
+
+  /**
+   * @Route("/envoi-de-mail", name="mail")
+   */
+  public function mail(\Swift_Mailer $mailer)
+  {
+    $em = $this->getDoctrine()->getManager();
+    $user = $em->getRepository(User::class)->find(1);
+
+    $url = $this->generateUrl('activation_compte', ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+    // dump($url);
+
+    $message = (new \Swift_Message('Activation de compte Orientation Authentique'))
+        ->setFrom('contact.youstra@gmail.com')
+        ->setTo($user->getEmail())
+        ->setBody(
+            $this->renderView(
+                // templates/emails/registration.html.twig
+                'Emails/registration.html.twig', [
+                'url'  => $url,
+                'user' => $user
+              ]
+            ),
+            'text/html'
+        );
+    $mailer->send($message);
+
+    $this->addFlash('success', 'Mail envoyé.');
+    return $this->redirectToRoute('admin');
   }
 }

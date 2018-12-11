@@ -52,7 +52,24 @@
                 <ul class="uk-navbar-nav uk-visible@s">
                   <li class="uk-active"><a href="{{ path('homepage') }}">Accueil</a></li>
                   <li><a href="{{ path('about') }}">A propos</a></li>
-                  <li><a href="{{ path('orientation') }}">Orientations</a></li>
+                  <li><a href=""  uk-toggle="target: #orientations">Orientations</a></li>
+                  <!-- Dropdown Structure -->
+                  <div id="orientations" uk-offcanvas="mode: slide; overlay: true">
+                    <div class="uk-offcanvas-bar">
+                      <button class="uk-offcanvas-close" type="button" uk-close></button>
+                      <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
+                        <li><a href="{{ path('orientation') }}"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Astuces</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="{{ path('orientation.mosquees') }}"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Mosquées</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="{{ path('orientation.hds') }}"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Hommes de sciences</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="{{ path('orientation.ecoles') }}"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Ecoles</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="{{ path('orientation.cours') }}"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Cours</a></li>
+                      </ul>
+                    </div>
+                  </div>
                   <li><a href="{{ path('contribution') }}">Contribution</a></li>
                   <li><a href="{{ path('contact') }}">Contact</a></li>
                   {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -63,10 +80,12 @@
                         <button class="uk-offcanvas-close" type="button" uk-close></button>
                         <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
                           {% if is_granted('ROLE_ADMIN') %}
-                          <li><a href="{{ path('admin') }}">Panel Admin</a></li>
+                          <li><a href="{{ path('admin') }}"><span class="uk-margin-small-right" uk-icon="icon: settings"></span>Panel Admin</a></li>
+                          <li class="uk-nav-divider"></li>
                           {% endif %}
-                          <li><a href="">Mon compte</a></li>
-                          <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+                          <li><a href=""><span class="uk-margin-small-right" uk-icon="icon: user"></span>Mon compte</a></li>
+                          <li class="uk-nav-divider"></li>
+                          <li><a href="{{ path('logout') }}"><span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>Déconnexion</a></li>
                         </ul>
                       </div>
                     </div>

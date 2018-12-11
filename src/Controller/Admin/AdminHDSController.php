@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\HDS;
+use App\Entity\Cours;
 use App\Entity\Search\HDSSearch;
 use App\Form\HDSType;
 use App\Form\HDSSearchType;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -24,6 +26,7 @@ class AdminHDSController extends AbstractController
 {
   /**
    * @Route("/", name="hds", methods="GET")
+   * @Security("has_role('ROLE_ADMIN')")
    */
   public function index(Request $request, PaginatorInterface $paginator): Response
   {
@@ -45,6 +48,7 @@ class AdminHDSController extends AbstractController
 
   /**
    * @Route("/add", name="hds.add", methods="GET|POST")
+   * @Security("has_role('ROLE_EDITEUR')")
    */
   public function hds_add(Request $request): Response
   {
@@ -78,6 +82,7 @@ class AdminHDSController extends AbstractController
 
   /**
    * @Route("/edit/{id}", name="hds.edit", methods="GET|POST", requirements={"id"="\d+"})
+   * @Security("has_role('ROLE_EDITEUR')")
    * @param HDS $hds
    */
   public function hds_edit(Request $request, HDS $hds): Response
@@ -112,13 +117,18 @@ class AdminHDSController extends AbstractController
 
   /**
    * @Route("/biographie/{id}", name="hds.biographie", methods="GET", requirements={"id"="\d+"})
+   * @Security("has_role('ROLE_ADMIN')")
    * @param HDS $hds
    */
   public function hds_biongraphie(Request $request, HDS $hds): Response
   {
     $em = $this->getDoctrine()->getManager();
+    $repoCours = $em->getRepository(Cours::class);
+    $courses = $repoCours->findBy(['hds' => $hds->getId()]);
+
     return $this->render('Admin/HDS/hds-biographie.html.twig', [
-      'hds'  => $hds
+      'hds'      => $hds,
+      'courses'  => $courses,
     ]);
   }
 

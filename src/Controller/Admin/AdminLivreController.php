@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -19,6 +20,7 @@ class AdminLivreController extends AbstractController
 {
   /**
    * @Route("/livre", name="livres", methods="GET")
+   * @Security("has_role('ROLE_ADMIN')")
    */
   public function livres(Request $request, PaginatorInterface $paginator): Response
   {
@@ -37,6 +39,7 @@ class AdminLivreController extends AbstractController
 
   /**
    * @Route("/livre/add", name="livre.add", methods="GET|POST")
+   * @Security("has_role('ROLE_EDITEUR')")
    */
   public function livre_add(Request $request): Response
   {
@@ -59,6 +62,7 @@ class AdminLivreController extends AbstractController
 
   /**
    * @Route("/livre/edit/{id<\d+>}", name="livre.edit", methods="GET|POST")
+   * @Security("has_role('ROLE_EDITEUR')")
    * @param Livre $livre
    */
   public function livre_edit(Livre $livre, Request $request): Response

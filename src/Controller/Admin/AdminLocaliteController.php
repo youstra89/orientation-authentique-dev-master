@@ -21,13 +21,12 @@ use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/admin/localite")
- * @Security("has_role('ROLE_EDITEUR')")
  */
 class AdminLocaliteController extends AbstractController
 {
   /**
    * @Route("/", name="localite", methods="GET")
-   * @Security("has_role('ROLE_EDITEUR')")
+   * @Security("has_role('ROLE_ADMIN')")
    */
   public function index(): Response
   {
@@ -36,7 +35,7 @@ class AdminLocaliteController extends AbstractController
 
   /**
    * @Route("/region", name="regions", methods="GET")
-   * @Security("has_role('ROLE_EDITEUR')")
+   * @Security("has_role('ROLE_ADMIN')")
    */
   public function regions(Request $request, PaginatorInterface $paginator): Response
   {
@@ -99,11 +98,9 @@ class AdminLocaliteController extends AbstractController
     ]);
   }
 
-
-
     /**
      * @Route("/ville", name="villes", methods="GET")
-     * @Security("has_role('ROLE_EDITEUR')")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function villes(Request $request, PaginatorInterface $paginator): Response
     {
@@ -171,7 +168,7 @@ class AdminLocaliteController extends AbstractController
 
     /**
      * @Route("/commune", name="communes", methods="GET")
-     * @Security("has_role('ROLE_EDITEUR')")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function communes(Request $request, PaginatorInterface $paginator): Response
     {

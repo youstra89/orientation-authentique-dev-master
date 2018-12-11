@@ -62,16 +62,18 @@
                     <li><a href="{{ path('courses') }}">Cours</a></li>
                     <li><a href="{{ path('ecoles') }}">Ecoles</a></li>
                     <li><a href="{{ path('hds') }}">HDS</a></li>
-                    {% if is_granted('ROLE_EDITEUR') %}
+                    {% if is_granted('ROLE_ADMIN') %}
                       <li><a class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: #compte"></a></li>
                       <!-- Dropdown Structure -->
                       <div id="compte" uk-offcanvas="mode: slide; overlay: true">
                         <div class="uk-offcanvas-bar">
                           <button class="uk-offcanvas-close" type="button" uk-close></button>
                           <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-                            <li><a href="{{ path('homepage') }}">Accès à l'appli</a></li>
-                            <li><a href="">Mon compte</a></li>
-                            <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+                            <li><a href="{{ path('homepage') }}"><span class="uk-margin-small-right" uk-icon="icon: home"></span>Accès à l'appli</a></li>
+                            <li class="uk-nav-divider"></li>
+                            <li><a href=""><span class="uk-margin-small-right" uk-icon="icon: user"></span>Mon compte</a></li>
+                            <li class="uk-nav-divider"></li>
+                            <li><a href="{{ path('logout') }}"><span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>Déconnexion</a></li>
                           </ul>
                         </div>
                       </div>
@@ -155,7 +157,7 @@
                 </ul>
                 <ul uk-accordion="collapsible: true" class="uk-margin">
                   <li><a class="" href="{{ path('hds') }}"><h4>Hommes de sciences</h4></a></li>
-                  {% if is_granted('ROLE_EDITEUR') %}
+                  {% if is_granted('ROLE_ADMIN') %}
                     <ul uk-accordion="collapsible: true">
                       <li>
                           <a href="orientation" class="uk-accordion-title">{{ app.user.username }}</a>

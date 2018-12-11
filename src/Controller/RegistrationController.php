@@ -83,6 +83,7 @@ class RegistrationController extends Controller
       $user->setToken(NULL);
       $user->setDisabled(false);
       $user->setUpdatedAt(new \DateTime());
+      $em->flush();
       return $this->render(
           'Security/activation.html.twig',[
             'user' => $user

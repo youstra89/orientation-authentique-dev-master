@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Cours;
 use App\Entity\Region;
 use App\Entity\Commune;
 use App\Entity\Mosquee;
@@ -14,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -24,6 +26,7 @@ class AdminMosqueeController extends AbstractController
 {
   /**
    * @Route("/", name="mosquees", methods="GET")
+   * @Security("has_role('ROLE_ADMIN')")
    */
   public function index(Request $request, PaginatorInterface $paginator): Response
   {
@@ -45,6 +48,7 @@ class AdminMosqueeController extends AbstractController
 
   /**
    * @Route("/add", name="mosquee.add", methods="GET|POST")
+   * @Security("has_role('ROLE_EDITEUR')")
    */
   public function mosquee_add(Request $request): Response
   {
@@ -72,6 +76,7 @@ class AdminMosqueeController extends AbstractController
 
   /**
    * @Route("/edit/{id}", name="mosquee.edit", methods="GET|POST", requirements={"id"="\d+"})
+   * @Security("has_role('ROLE_EDITEUR')")
    * @param Mosquee $mosquee
    */
   public function mosquee_edit(Request $request, Mosquee $mosquee): Response
@@ -100,13 +105,17 @@ class AdminMosqueeController extends AbstractController
 
   /**
    * @Route("/information/{id}", name="mosquee.info", methods="GET", requirements={"id"="\d+"})
+   * @Security("has_role('ROLE_ADMIN')")
    * @param Mosquee $mosquee
    */
   public function mosquee_informations(Request $request, Mosquee $mosquee): Response
   {
     $em = $this->getDoctrine()->getManager();
+    $repoCours = $em->getRepository(Cours::class);
+    $courses = $repoCours->findBy(['mosquee' => $mosquee->getId()]);
     return $this->render('Admin/Mosquee/mosquee-info.html.twig', [
-      'mosquee'  => $mosquee
+      'mosquee'  => $mosquee,
+      'courses'  => $courses,
     ]);
   }
 

@@ -38,14 +38,9 @@
 
 
 {% block body %}
-<div class="uk-container uk-padding-small">
-  <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Recherche de mosquée</span></h1>
-  <hr class="uk-divider-icon"><br>
-</div>
-{% endblock %}
-
-{% block content %}
-  <div class="uk-container">
+  <div class="uk-container uk-padding-small">
+    <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Recherche de mosquée</span></h1>
+    <hr class="uk-divider-icon"><br>
     {{ form_start(form) }}
     <div class="uk-grid">
       <div class="uk-width-1-4@s">
@@ -63,26 +58,28 @@
     </div>
     {{ form_end(form) }}
   </div>
-  <h2>Mosquées enregistrées</h2>
-  <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
-      {% for mosquee in mosquees %}
-      <div>
-        <div class="uk-card uk-card-default uk-card-small uk-card-body">
-          <div class="uk-width-auto">
-            <img class="uk-border-circle" width="40" height="40" src="{{ asset('img/fahrul-azmi.jpg') }}">
+  <div class="uk-container uk-padding-small">
+    <h2>Mosquées enregistrées</h2>
+    <div class="uk-child-width-1-4@s uk-grid-match" uk-grid>
+        {% for mosquee in mosquees %}
+        <div>
+          <div class="uk-card uk-card-default uk-card-small uk-card-body">
+            <div class="uk-width-auto">
+              <img class="uk-border-circle" width="40" height="40" src="{{ asset('img/fahrul-azmi.jpg') }}">
+            </div>
+            <div class="uk-card-badge uk-label"uk-tooltip="title: Année de construction de la mosquée; pos: top">{{ mosquee.anneeConstruction }}</div>
+            <h3 class="uk-card-title uk-margin-remove-bottom">{{ mosquee.nom }} </h3>
+            <p class="uk-text-meta uk-margin-remove-top">{{ mosquee.quartier ~ ', '~ mosquee.commune.nom }}</p>
+            <p></p>
+            <br>
+            <a href="{{ path('orientation.mosquee.info', {id: mosquee.id}) }}" class="uk-button uk-button-text">Plus d'infos</a>
           </div>
-          <div class="uk-card-badge uk-label"uk-tooltip="title: Année de construction de la mosquée; pos: top">{{ mosquee.anneeConstruction }}</div>
-          <h3 class="uk-card-title uk-margin-remove-bottom">{{ mosquee.nom }} </h3>
-          <p class="uk-text-meta uk-margin-remove-top">{{ mosquee.quartier ~ ', '~ mosquee.commune.nom }}</p>
-          <p></p>
-          <br>
-          <a href="{{ path('mosquee.info', {id: mosquee.id}) }}" class="uk-button uk-button-text">Plus d'infos</a>
         </div>
-      </div>
-      {% endfor %}
-  </div>
-  <div class="uk-pagination uk-flex-center"><br>
-    {{ knp_pagination_render(mosquees) }}
+        {% endfor %}
+    </div>
+    <div class="uk-pagination uk-flex-center"><br>
+      {{ knp_pagination_render(mosquees) }}
+    </div>
   </div>
 {% endblock %}
 

@@ -52,6 +52,34 @@
   <div class="">
     {{ hds.biographie|raw }}
   </div>
+  <h2>Les cours dispensés par <strong>{{ hds.pnom }} {{ hds.nom }}</strong> </h2>
+  <div uk-grid>
+    <table class="uk-table uk-table-small uk-table-divider">
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Discipline</th>
+        <th>Mosquées</th>
+        <th>Jour/Heure</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set i = 0 %}
+      {% for cours in courses %}
+        {% set i = i + 1 %}
+        <tr>
+          <td>{{ i }}</td>
+          <td>{{ cours.discipline.nom }}</td>
+          <td>{{ cours.mosquee.nom }}</td>
+          <td>{{ cours.getJourCoursType }}, {{ cours.getHeureCoursType }}</td>
+          <td>
+            <a href="{{ path('cours.details', {id: cours.id}) }}" uk-icon="icon: file-text" uk-tooltip="title: Voir plus de détails; pos: top"></a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}
 
 

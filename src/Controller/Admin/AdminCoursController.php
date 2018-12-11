@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -25,6 +26,7 @@ class AdminCoursController extends AbstractController
 {
   /**
    * @Route("/", name="courses", methods="GET")
+   * @Security("has_role('ROLE_ADMIN')")
    */
   public function index(Request $request, PaginatorInterface $paginator): Response
   {
@@ -46,6 +48,7 @@ class AdminCoursController extends AbstractController
 
   /**
    * @Route("/hds-pour-enregistrement-cours", name="cours.add.select.hds", methods="GET")
+   * @Security("has_role('ROLE_EDITEUR')")
    */
   public function cours_add_select_hds(Request $request): Response
   {
@@ -58,6 +61,7 @@ class AdminCoursController extends AbstractController
 
   /**
    * @Route("/mosquee-pour-enregistrement-cours/hds-{id}", name="cours.add.select.mosquee", methods="GET")
+   * @Security("has_role('ROLE_EDITEUR')")
    * @param HDS $hds
    */
   public function cours_add_select_mosquee(Request $request, HDS $hds): Response
@@ -72,6 +76,7 @@ class AdminCoursController extends AbstractController
 
   /**
    * @Route("/add-hds-{hdsId}-mosquee-{id}", name="cours.add", methods="GET|POST", requirements={"hdsId"="\d+", "id"="\d+"})
+   * @Security("has_role('ROLE_EDITEUR')")
    * @param Mosquee $mosquee
    */
   public function cours_add(Request $request, Mosquee $mosquee, int $hdsId): Response
@@ -164,6 +169,7 @@ class AdminCoursController extends AbstractController
 
   /**
    * @Route("/edit/{id<\d+>}", name="cours.edit", methods="GET|POST")
+   * @Security("has_role('ROLE_EDITEUR')")
    * @param Cours $cours
    */
   public function cours_edit(Cours $cours, Request $request): Response
@@ -187,6 +193,7 @@ class AdminCoursController extends AbstractController
 
   /**
    * @Route("/details/{id<\d+>}", name="cours.details", methods="GET")
+   * @Security("has_role('ROLE_ADMIN')")
    * @param Cours $cours
    */
   public function cours_details(Cours $cours, Request $request): Response
