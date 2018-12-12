@@ -83,7 +83,7 @@
                           <li><a href="{{ path('admin') }}"><span class="uk-margin-small-right" uk-icon="icon: settings"></span>Panel Admin</a></li>
                           <li class="uk-nav-divider"></li>
                           {% endif %}
-                          <li><a href=""><span class="uk-margin-small-right" uk-icon="icon: user"></span>Mon compte</a></li>
+                          <li><a href="{{ path('profile') }}"><span class="uk-margin-small-right" uk-icon="icon: user"></span>Mon compte</a></li>
                           <li class="uk-nav-divider"></li>
                           <li><a href="{{ path('logout') }}"><span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>Déconnexion</a></li>
                         </ul>
@@ -168,7 +168,7 @@
                               {% if is_granted('ROLE_ADMIN') %}
                               <li><a href="{{ path('admin') }}">Panel Admin</a></li>
                               {% endif %}
-                              <li><a href="">Mon compte</a></li>
+                              <li><a href="{{ path('logout') }}">Mon compte</a></li>
                               <li><a href="{{ path('logout') }}">Déconnexion</a></li>
                             </ul>
                           </div>
@@ -184,7 +184,32 @@
         {% endblock %}
       </header>
 
-      {% block notification %}{% endblock %}
+      {% block notification %}
+        {% for message in app.flashes('success') %}
+          <div class="uk-container uk-padding-small">
+            <div class="uk-alert-success" uk-alert>
+              <a class="uk-alert-close" uk-close></a>
+              <p>{{ message }}</p>
+            </div>
+          </div>
+        {% endfor %}
+        {% for message in app.flashes('warning') %}
+          <div class="uk-container uk-padding-small">
+            <div class="uk-alert-warning" uk-alert>
+              <a class="uk-alert-close" uk-close></a>
+              <p>{{ message }}</p>
+            </div>
+          </div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+          <div class="uk-container uk-padding-small">
+            <div class="uk-alert-danger" uk-alert>
+              <a class="uk-alert-close" uk-close></a>
+              <p>{{ message }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      {% endblock %}
 
       {% block body %}
       <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200" style="background-image: url('{{ asset('img/fahrul-azmi.jpg') }}');">

@@ -12,22 +12,6 @@
 
 
 {% block notification %}
-  {% for message in app.flashes('success') %}
-    <div class="uk-container uk-padding-small">
-      <div class="uk-alert-success" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p>{{ message }}</p>
-      </div>
-    </div>
-  {% endfor %}
-  {% for message in app.flashes('error') %}
-    <div class="uk-container uk-padding-small">
-      <div class="uk-alert-danger" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p>{{ message }}</p>
-      </div>
-    </div>
-  {% endfor %}
 {% endblock %}
 
 

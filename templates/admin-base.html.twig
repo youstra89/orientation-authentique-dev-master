@@ -71,7 +71,11 @@
                           <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
                             <li><a href="{{ path('homepage') }}"><span class="uk-margin-small-right" uk-icon="icon: home"></span>Accès à l'appli</a></li>
                             <li class="uk-nav-divider"></li>
-                            <li><a href=""><span class="uk-margin-small-right" uk-icon="icon: user"></span>Mon compte</a></li>
+                            <li><a href="{{ path('profile') }}"><span class="uk-margin-small-right" uk-icon="icon: user"></span>Mon compte</a></li>
+                            <li class="uk-nav-divider"></li>
+                            <li><a href="{{ path('users') }}"><span class="uk-margin-small-right" uk-icon="icon: users"></span>Utilisateurs</a></li>
+                            <li class="uk-nav-divider"></li>
+                            <li><a href="{{ path('messages') }}"><span class="uk-margin-small-right" uk-icon="icon: mail"></span>Messages</a></li>
                             <li class="uk-nav-divider"></li>
                             <li><a href="{{ path('logout') }}"><span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>Déconnexion</a></li>
                           </ul>
@@ -163,9 +167,11 @@
                           <a href="orientation" class="uk-accordion-title">{{ app.user.username }}</a>
                           <div class="uk-accordion-content">
                             <ul class="uk-list uk-list-divider">
-                              <li><a href="{{ path('homepage') }}">Accès à l'appli</a></li>
-                              <li><a href="">Mon compte</a></li>
-                              <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+                              <li><a href="{{ path('homepage') }}"><span class="uk-margin-small-right" uk-icon="icon: home"></span>Accès à l'appli</a></li>
+                              <li><a href="{{ path('profile') }}"><span class="uk-margin-small-right" uk-icon="icon: user"></span>Mon compte</a></li>
+                              <li><a href="{{ path('users') }}"><span class="uk-margin-small-right" uk-icon="icon: users"></span>Utilisateurs</a></li>
+                              <li><a href="{{ path('messages') }}"><span class="uk-margin-small-right" uk-icon="icon: mail"></span>Messages</a></li>
+                              <li><a href="{{ path('logout') }}"><span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>Déconnexion</a></li>
                             </ul>
                           </div>
                       </li>

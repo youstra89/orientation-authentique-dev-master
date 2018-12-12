@@ -9,6 +9,7 @@ use App\Entity\Cours;
 use App\Entity\Livre;
 use App\Entity\Ville;
 use App\Entity\Region;
+use App\Entity\Message;
 use App\Entity\Mosquee;
 use App\Entity\Commune;
 use App\Entity\Discipline;
@@ -28,6 +29,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 /**
  * @Route("/admin")
@@ -71,6 +74,42 @@ class AdminController extends AbstractController
       'mosquees'    => $mosquees,
       'communes'    => $communes,
       'disciplines' => $disciplines,
+    ]);
+  }
+
+  /**
+   *@Route("/messages", name="messages")
+   */
+  public function messages(Request $request, ObjectManager $em, PaginatorInterface $paginator)
+  {
+    $repoMessage = $em->getRepository(Message::class);
+    $messages = $paginator->paginate(
+      $repoMessage->messagesSelectQuery(),
+      $request->query->getInt('page', 1),
+      20
+    );
+
+    return $this->render('Admin/messages.html.twig', [
+      'messages' => $messages
+    ]);
+  }
+
+
+  /**
+   *@Route("/messages/read/{id}", name="message.read", requirements={"id"="\d+"})
+   * @param Message $message
+   */
+  public function message_read(Request $request, ObjectManager $em, Message $message)
+  {
+    if (empty($message->getReadAt())) {
+      // code...
+      $user = $this->getUser();
+      $message->setReadAt(new \DateTime());
+      $message->setReader($user);
+      $em->flush();
+    }
+    return $this->render('Admin/read-message.html.twig', [
+      'message' => $message
     ]);
   }
 

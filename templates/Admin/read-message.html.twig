@@ -1,0 +1,44 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'admin-base.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+
+{% block big_title 'Lecture de message' %}
+
+
+
+{% block body %}
+<a href="javascript:history.back()"class="uk-button uk-button-default">Retour</a>
+<div class="uk-grid">
+  <div class="uk-width-1-4@s">
+    <strong>Nom & Prénom</strong><br>
+    {{ message.fullname }}
+  </div>
+  <div class="uk-width-1-4@s">
+    <strong>Email</strong><br>
+    <a class="white-text" href="mailto:{{ message.email }}" uk-tooltip="title: Répondez à l'expéditeur; pos: top">{{ message.email }}</a>
+  </div>
+  <div class="uk-width-1-4@s">
+    <strong>Numéro de téléphone</strong><br>
+    {{ message.phoneNumber }}
+  </div>
+  <div class="uk-width-1-4@s">
+    <strong>Sujet</strong><br>
+    {{ message.subject }}
+  </div>
+  <div class="uk-margin">
+    <strong>Message</strong><br>
+    {{ message.message }}
+  </div>
+</div><br>
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+{% endblock %}

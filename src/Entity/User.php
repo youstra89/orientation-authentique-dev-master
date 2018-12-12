@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -91,6 +93,11 @@ class User implements UserInterface, \Serializable
     private $updated_at;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $pwd_changed_at;
+
+    /**
      * @var string le token qui servira lors de l'oubli de mot de passe
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -100,12 +107,23 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
       $this->created_at = new \DateTime();
+      $this->messages = new ArrayCollection();
     }
 
     /**
      * @ORM\Column(type="boolean")
      */
     private $disabled = true;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $phone_number;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="reader")
+     */
+    private $messages;
 
     public function getId(): ?int
     {
@@ -258,6 +276,18 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    public function getPwdChangedAt(): ?\DateTimeInterface
+    {
+        return $this->pwd_changed_at;
+    }
+
+    public function setPwdChangedAt(?\DateTimeInterface $pwd_changed_at): self
+    {
+        $this->pwd_changed_at = $pwd_changed_at;
+
+        return $this;
+    }
+
     public function getDisabled(): ?bool
     {
         return $this->disabled;
@@ -327,5 +357,48 @@ class User implements UserInterface, \Serializable
     public function unserialize($serialized): void
     {
         [$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phone_number;
+    }
+
+    public function setPhoneNumber(string $phone_number): self
+    {
+        $this->phone_number = $phone_number;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setReader($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->contains($message)) {
+            $this->messages->removeElement($message);
+            // set the owning side to null (unless already changed)
+            if ($message->getReader() === $this) {
+                $message->setReader(null);
+            }
+        }
+
+        return $this;
     }
 }

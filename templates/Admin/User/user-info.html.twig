@@ -1,0 +1,71 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'Admin/User/index.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+{% block title 'Informations utilisateur ' ~ user.username ~ ' | Orientation Authentique' %}
+
+{% block big_title %}
+  Informations utilisateur <strong>{{ user.username }} </strong>
+{% endblock %}
+
+
+
+{% block body %}
+<h2>Profil de <strong>{{ user.username }}</strong><br> </h2>
+<a href="javascript:history.back()"class="uk-button uk-button-default">Retour</a>
+<ul class="uk-subnav uk-subnav-pill" uk-switcher="animation: uk-animation-fade">
+  <li><a href="#">Infos User</a></li>
+  <li><a href="#">Autres actions</a></li>
+</ul>
+<ul class="uk-switcher uk-margin">
+    <li>
+      <div class="uk-grid">
+        <div class="uk-width-1-4@s">
+          <strong>Nom</strong><br>
+          {{ user.nom }}
+        </div>
+        <div class="uk-width-1-4@s">
+          <strong>Prénom</strong><br>
+          {{ user.pnom }}
+        </div>
+        <div class="uk-width-1-4@s">
+          <strong>Résidence</strong><br>
+          {{ user.residence }}
+        </div>
+      </div><br>
+      <div class="uk-grid">
+        <div class="uk-width-1-4@s">
+          <strong>Date de naissance</strong><br>
+          {{ user.dateNaissance|date('d-m-Y') }}
+        </div>
+        <div class="uk-width-1-4@s">
+          <strong>Sexe</strong><br>
+          {{ user.sexeType }}
+        </div>
+        <div class="uk-width-1-4@s">
+          <strong>Email</strong><br>
+          {{ user.email }}
+        </div>
+        <div class="uk-width-1-4@s">
+          <strong>Date d'inscription</strong><br>
+          {{ user.createdAt|date('d-m-y à H:i') }}
+        </div>
+      </div><br>
+    </li>
+    <li>
+      <p uk-margin>
+        <!-- <a class="uk-button uk-button-default uk-button-large" href="{{ path('change_pwd') }}">Modifier votre mot de passe</a> -->
+        <!-- <a class="uk-button uk-button-primary uk-button-large">Large button</a>
+        <a class="uk-button uk-button-secondary uk-button-large">Large button</a> -->
+      </p>
+    </li>
+  </ul>
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

@@ -1,0 +1,103 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'admin-base.html.twig'%}
+
+
+{% block stylesheets %}
+{% endblock %}
+
+
+
+{% block big_title 'Panel Admin' %}
+
+
+
+{% block contextual_menu %}
+{% endblock %}
+
+
+
+{% block content %}
+{% endblock %}
+
+
+
+{% block notification %}
+  {% for message in app.flashes('success') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+  {% for message in app.flashes('warning') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-warning" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+  {% for message in app.flashes('error') %}
+    <div class="uk-container uk-padding-small">
+      <div class="uk-alert-danger" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+
+
+{% block body %}
+<h2>Boîtes de réception</h2>
+<table class="uk-table uk-table-small uk-table-divider">
+  <thead>
+    <tr>
+      <th>N°</th>
+      <th>Nom</th>
+      <th>Sujet</th>
+      <th>Messages</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% set i = 0 %}
+    {% for msg in messages %}
+      {% set i = i + 1 %}
+      {% set color = '' %}
+      {% if msg.readAt is empty %}
+        {% set color = 'bold' %}
+      {% endif %}
+      <tr style="font-weight: {{ color }};">
+        <td>{{ i }}</td>
+        <td>{{ msg.fullname }}</td>
+        <td>{{ msg.subject }}</td>
+        <td>
+          {% if msg.getMessage|length > 50 %}
+            {{ msg.getMessage|slice(0, 50) ~ '...' }}
+          {% else %}
+            {{ msg.getMessage }}
+          {% endif %}
+        </td>
+        <td>
+          <a href="{{ path('message.read', {id: msg.id}) }}" uk-icon="icon: file-text" uk-tooltip="title: Editer la commune; pos: top"></a>
+          {% if msg.readAt is not empty %}
+            <a uk-icon="icon: info" uk-tooltip="title: Lu par {{ msg.reader.username }}"; pos: top"></a>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="uk-pagination uk-flex-center">
+  {{ knp_pagination_render(messages) }}
+</div>
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+{% endblock %}

@@ -6,6 +6,6 @@ swiftmailer:
     encryption: ssl
     port: 465
     host: smtp.gmail.com
-    username: contact.youstra@gmail.com
-    password: youstra89
+    username: orientationauthentique@gmail.com
+    password: 404#@gbo
     spool: { type: 'memory' }

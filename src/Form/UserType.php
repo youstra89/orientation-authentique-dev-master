@@ -19,14 +19,15 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, ['required' => true, 'label' => 'Votre mail'])
-            ->add('nom', TextType::class, ['label' => 'Nom'])
-            ->add('pnom', TextType::class, ['label' => 'Prénom'])
+            ->add('nom', TextType::class, ['required' => true, 'label' => 'Nom'])
+            ->add('pnom', TextType::class, ['required' => true, 'label' => 'Prénom'])
             ->add('sexe', ChoiceType::class, [
               'choices' => $this->getChoices()
             ])
-            ->add('residence', TextType::class, ['label' => 'Commune/Ville'])
-            ->add('date_naissance', BirthdayType::class)
-            ->add('username', TextType::class)
+            ->add('residence', TextType::class, ['required' => true, 'label' => 'Commune/Ville'])
+            ->add('phone_number', TextType::class, ['label' => 'Numéro de téléphone'])
+            ->add('date_naissance', BirthdayType::class, ['required' => true])
+            ->add('username', TextType::class, ['required' => true])
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Mot de passe'),

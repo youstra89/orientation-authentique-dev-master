@@ -21,7 +21,41 @@
 {% block body %}
   <div class="uk-container uk-padding-small">
     <h1 class="uk-heading-line uk-heading-primary uk-text-center"><span>Contacter Orientation Authentique</span></h1>
-    <p class="uk-text-center">Formulaire de contact</p>
+    <hr class="uk-divider-icon"><br>
+    <div class="uk-grid-small uk-grid-divider uk-child-width-expand@m" uk-grid>
+      <div class="uk-width-1-3@m">
+        <p class="uk-text-center">
+          Vous pouvez nous envoyer un mail à l'adresse: <a href="mailto:orientationauthentique@gmail.com">orientationauthentique@gmail.com</a>
+          ou si vous le souhaitez, vous pouvez nous laissez un message à travers ce formulaire de contact
+        </p>
+      </div>
+      <div class="uk-width-expand@m uk-padding-small uk-padding-remove-top uk-padding-remove-right">
+        <h2 class="uk-heading">Formulaire de contact</h2>
+        {{ form_start(form, { 'attr': {'class': 'uk-grid-small'} }) }}
+        <fieldset class="uk-fieldset">
+          <div class="uk-grid">
+            <div class="uk-width-1-3@s">
+              {{ form_row(form.fullname, { 'attr': {'class': 'uk-input'} }) }}
+            </div>
+            <div class="uk-width-1-3@s">
+              {{ form_row(form.email, { 'attr': {'class': 'uk-input'} }) }}
+            </div>
+            <div class="uk-width-1-3@s">
+              {{ form_row(form.phone_number, { 'attr': {'class': 'uk-input'} }) }}
+            </div>
+          </div>
+          <div class="uk-margin">
+            {{ form_row(form.subject, { 'attr': {'class': 'uk-input'} }) }}
+          </div>
+          <div class="uk-margin">
+            {{ form_row(form.message, { 'attr': {'class': 'uk-textarea', 'rows': 5, 'placeholder': 'Saisissez votre message ici'} }) }}
+          </div>
+          {{ form_rest(form) }}
+          <button class="uk-button uk-button-primary">{{ button|default('Envoyer') }}</button>
+        </fieldset><br>
+        {{ form_end(form) }}
+      </div>
+    </div>
   </div>
 {% endblock %}
 
